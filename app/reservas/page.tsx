@@ -15,7 +15,6 @@ export default function Reservas() {
   const [bookingType, setBookingType] = useState("Alojamento Exclusivo");
   const [guests, setGuests] = useState(2);
 
-  // Carregar datas ocupadas do Supabase + buffer de 2 dias de limpeza/manutenção
   useEffect(() => {
     async function fetchBookings() {
       const { data, error } = await supabase
@@ -28,9 +27,7 @@ export default function Reservas() {
         data.forEach((booking) => {
           let start = new Date(booking.check_in);
           let end = new Date(booking.check_out);
-          
-          // Adicionar 2 dias de folga obrigatória após o check-out para limpeza e arranjos
-          end.setDate(end.getDate() + 2);
+          end.setDate(end.getDate() + 2); // Buffer de 2 dias de limpeza/manutenção
           
           while (start < end) {
             dates.push(start.toISOString().split("T")[0]);
@@ -43,37 +40,29 @@ export default function Reservas() {
     fetchBookings();
   }, []);
 
-  // Tabela de Preços e Regras por Noite
   const getNightPricing = (dateStr: string) => {
     const d = new Date(dateStr);
     const m = d.getMonth() + 1;
     const day = d.getDate();
 
-    // Natal / Fim de Ano (22 Dez - 3 Jan): 650€ | Min 3 noites
     if ((m === 12 && day >= 22) || (m === 1 && day <= 3)) {
-      return { price: 650, minStay: 3 };
+      return { price: 650, minStay: 3 }; // Natal / Fim de Ano
     }
-    // Maio e Junho: 600€ | Min 3 noites
     if (m === 5 || m === 6) {
-      return { price: 600, minStay: 3 };
+      return { price: 600, minStay: 3 }; // Maio / Junho
     }
-    // Julho: 650€ | Min 4 noites
     if (m === 7) {
-      return { price: 650, minStay: 4 };
+      return { price: 650, minStay: 4 }; // Julho
     }
-    // Agosto: 700€ | Min 5 noites
     if (m === 8) {
-      return { price: 700, minStay: 5 };
+      return { price: 700, minStay: 5 }; // Agosto (Mínimo 5 noites)
     }
-    // Setembro: 600€ | Min 2 noites
     if (m === 9) {
-      return { price: 600, minStay: 2 };
+      return { price: 600, minStay: 2 }; // Setembro
     }
-    // Resto do Ano (Base): 550€ | Min 2 noites
-    return { price: 550, minStay: 2 };
+    return { price: 550, minStay: 2 }; // Época Base
   };
 
-  // Matemática On-The-Fly (Noites, Preço Base, Hóspedes Extras e Descontos)
   let baseNightlyTotal = 0;
   let totalNights = 0;
   let requiredMinStay = 2;
@@ -81,7 +70,6 @@ export default function Reservas() {
   if (checkIn && checkOut && checkIn < checkOut) {
     let curr = new Date(checkIn);
     const end = new Date(checkOut);
-
     const checkInRule = getNightPricing(checkIn);
     requiredMinStay = checkInRule.minStay;
 
@@ -94,12 +82,10 @@ export default function Reservas() {
     }
   }
 
-  // Taxa de hóspedes extras (Acima de 10 pessoas: +75€ por pessoa/noite)
   const extraGuests = Math.max(0, guests - 10);
   const extraGuestsFee = extraGuests * 75 * totalNights;
   const subtotal = baseNightlyTotal + extraGuestsFee;
 
-  // Descontos de Longa Duração (1 semana = 15% | 1 mês = 25%)
   let discountPercent = 0;
   let discountAmount = 0;
 
@@ -113,7 +99,7 @@ export default function Reservas() {
 
   const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleActionSubmit = async (actionType: 'reservar' | 'informacao', e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus({ type: null, text: "" });
@@ -126,20 +112,20 @@ export default function Reservas() {
       return;
     }
 
-    if (!checkIn || !checkOut || checkIn >= checkOut) {
-      setStatus({ type: "error", text: "Por favor, selecione um intervalo de datas válido." });
-      setIsSubmitting(false);
-      return;
-    }
-
-    if (guests > 12) {
-      setStatus({ type: "error", text: "A lotação máxima da propriedade é de 12 hóspedes." });
+    if (bookingType === "Alojamento Exclusivo" && (!checkIn || !checkOut || checkIn >= checkOut)) {
+      setStatus({ type: "error", text: "Por favor, selecione as datas de check-in e check-out." });
       setIsSubmitting(false);
       return;
     }
 
     if (bookingType === "Alojamento Exclusivo" && totalNights < requiredMinStay) {
-      setStatus({ type: "error", text: `Para estas datas, a estadia mínima exigida é de ${requiredMinStay} noites.` });
+      setStatus({ type: "error", text: `Para o período selecionado, a estadia mínima exigida é de ${requiredMinStay} noites.` });
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (guests > 12) {
+      setStatus({ type: "error", text: "A capacidade máxima da propriedade é de 12 hóspedes." });
       setIsSubmitting(false);
       return;
     }
@@ -150,18 +136,19 @@ export default function Reservas() {
       phone: formData.get("phone") as string,
       booking_type: bookingType,
       language: formData.get("language") as string,
-      check_in: checkIn,
-      check_out: checkOut,
+      check_in: checkIn || null,
+      check_out: checkOut || null,
       guests: guests,
       notes: formData.get("notes") as string,
       total_price: bookingType === "Alojamento Exclusivo" ? totalPrice : 0,
-      status: 'pendente'
+      action_type: actionType, // 'reservar' ou 'informacao'
+      status: actionType === 'reservar' ? 'pendente_pagamento' : 'pendente'
     };
 
     const { error } = await supabase.from("booking_requests").insert([bookingData]);
 
     if (error) {
-      setStatus({ type: "error", text: "Não foi possível enviar o pedido. Por favor, tente novamente." });
+      setStatus({ type: "error", text: "Não foi possível processar o pedido. Tente novamente." });
       setIsSubmitting(false);
       return;
     } 
@@ -170,10 +157,14 @@ export default function Reservas() {
       await fetch('/api/send-booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...bookingData, totalPrice, discountPercent, extraGuestsFee }),
+        body: JSON.stringify({ ...bookingData, totalPrice, discountPercent, extraGuestsFee, totalNights }),
       });
       
-      setStatus({ type: "success", text: "Pedido submetido com sucesso. Enviámos um email de confirmação com os detalhes." });
+      const successText = actionType === 'reservar' 
+        ? "Reserva iniciada com sucesso! Verifique o seu email para consultar os dados de pagamento (prazo de 24h)." 
+        : "Pedido de informações enviado com sucesso. Entraremos em contacto brevemente.";
+
+      setStatus({ type: "success", text: successText });
       (e.target as HTMLFormElement).reset();
       setCheckIn("");
       setCheckOut("");
@@ -206,6 +197,18 @@ export default function Reservas() {
       if (dateStr < checkIn) {
         setCheckIn(dateStr);
       } else {
+        // Validar se o intervalo cumpre a regra de noites mínimas da data de check-in
+        const rule = getNightPricing(checkIn);
+        const tempStart = new Date(checkIn);
+        const tempEnd = new Date(dateStr);
+        const diffTime = Math.abs(tempEnd.getTime() - tempStart.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < rule.minStay) {
+          alert(`Para esta data de check-in (${checkIn}), a estadia mínima é de ${rule.minStay} noites.`);
+          return;
+        }
+
         setCheckOut(dateStr);
       }
     }
@@ -219,23 +222,23 @@ export default function Reservas() {
             Disponibilidade & Tarifas
           </h1>
           <p className="text-stone-500 font-light text-sm tracking-wide">
-            Consulte o calendário em tempo real, simule a sua estadia e aproveite os nossos descontos de longa duração.
+            Consulte o calendário em tempo real, calcule o seu orçamento e decida se pretende reservar de imediato ou pedir mais informações.
           </p>
         </div>
 
-        {/* CAIXA DE AVISO DE REGRAS E DESCONTOS VISÍVEIS */}
+        {/* CAIXA DE REGRAS VISÍVEIS */}
         <div className="bg-white p-6 border border-stone-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-stone-600 font-light">
           <div className="border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-4">
-            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Capacidade & Hóspedes</p>
-            <p>Incluído para até <strong>10 hóspedes</strong>. Capacidade máxima de <strong>12 hóspedes</strong> (suplemento de 75€/noite por hóspede adicional a partir do 11º).</p>
+            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Capacidade & Suplementos</p>
+            <p>Incluído para até <strong>10 hóspedes</strong>. Máximo de <strong>12 hóspedes</strong> (+75€/noite por pessoa adicional).</p>
           </div>
           <div className="border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-4">
             <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Descontos de Estadia</p>
-            <p>• <strong>15% de desconto</strong> em estadias de 1 semana (7+ noites).<br />• <strong>25% de desconto</strong> em estadias de 1 mês (30+ noites).</p>
+            <p>• <strong>15% de desconto</strong> em 7+ noites.<br />• <strong>25% de desconto</strong> em estadias mensais (30+ noites).</p>
           </div>
           <div>
-            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Manutenção & Limpeza</p>
-            <p>O calendário inclui automaticamente um intervalo técnico de 2 dias entre estadias para preparação e higienização rigorosa da propriedade.</p>
+            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Regras de Reserva</p>
+            <p>Época base: min. 2 noites | Maio/Junho: min. 3 | Julho: min. 4 | Agosto: min. 5 | Natal: min. 3 noites.</p>
           </div>
         </div>
 
@@ -318,9 +321,9 @@ export default function Reservas() {
           </div>
         </div>
 
-        {/* FORMULÁRIO COM ORÇAMENTO AUTOMÁTICO */}
+        {/* FORMULÁRIO COM DUPLA OPÇÃO */}
         <div className="bg-white p-8 md:p-12 shadow-sm border border-stone-200">
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form className="space-y-8">
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8 border-b border-stone-100">
               <div>
@@ -374,7 +377,6 @@ export default function Reservas() {
                 </select>
               </div>
 
-              {/* Caixa de Resumo de Preço Dinâmico com Descontos e Hóspedes Extras */}
               {bookingType === "Alojamento Exclusivo" && checkIn && checkOut && checkIn < checkOut && (
                 <div className="md:col-span-2 bg-stone-50 p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div>
@@ -384,7 +386,7 @@ export default function Reservas() {
                     </p>
                     {discountPercent > 0 && (
                       <p className="text-xs text-green-700 font-medium mt-1">
-                        ✨ Desconto de longa duração aplicado: {discountPercent}% ({totalNights >= 30 ? "Estadia Mensal" : "Estadia Semanal"})
+                        ✨ Desconto aplicado: {discountPercent}% ({totalNights >= 30 ? "Estadia Mensal" : "Estadia Semanal"})
                       </p>
                     )}
                   </div>
@@ -392,12 +394,6 @@ export default function Reservas() {
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Valor Estimado</p>
                     <p className="text-2xl font-light text-[#112535]">{totalPrice}€</p>
                   </div>
-                </div>
-              )}
-
-              {bookingType !== "Alojamento Exclusivo" && (
-                <div className="md:col-span-2 bg-amber-50 p-6 border border-amber-200 text-amber-900 text-sm font-light">
-                  ℹ️ Para eventos, casamentos ou retiros, os valores diferem e exigem uma proposta personalizada. Submeta o pedido e entraremos em contacto com um orçamento detalhado.
                 </div>
               )}
 
@@ -426,7 +422,6 @@ export default function Reservas() {
               </div>
             </div>
 
-            {/* Checkbox RGPD */}
             <div className="flex items-start gap-3">
               <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 border-stone-300 text-[#112535] focus:ring-[#112535]" />
               <label htmlFor="rgpd" className="text-sm font-light text-stone-500 leading-relaxed">
@@ -440,9 +435,23 @@ export default function Reservas() {
               </div>
             )}
 
-            <div className="pt-4 text-center">
-              <button type="submit" disabled={isSubmitting} className="w-full md:w-auto px-12 py-4 bg-[#112535] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70">
-                {isSubmitting ? "A Processar..." : "Submeter Pedido de Reserva"}
+            {/* BOTÕES DE DUPLA AÇÃO */}
+            <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                type="button"
+                disabled={isSubmitting}
+                onClick={(e) => handleActionSubmit('reservar', e as unknown as React.FormEvent<HTMLFormElement>)}
+                className="px-10 py-4 bg-[#112535] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70 transition-opacity"
+              >
+                {isSubmitting ? "A Processar..." : "Reservar de Imediato (Pagar Sinal)"}
+              </button>
+              <button 
+                type="button"
+                disabled={isSubmitting}
+                onClick={(e) => handleActionSubmit('informacao', e as unknown as React.FormEvent<HTMLFormElement>)}
+                className="px-10 py-4 border border-[#112535] text-[#112535] text-xs font-medium tracking-[0.2em] uppercase hover:bg-[#112535] hover:text-white disabled:opacity-70 transition-colors"
+              >
+                {isSubmitting ? "A Processar..." : "Pedir Apenas Informações"}
               </button>
             </div>
           </form>
