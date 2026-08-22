@@ -6,7 +6,6 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Efeito que ajusta o espaçamento ao fazer scroll, mantendo o topo fixo e elegante
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -14,13 +13,14 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#112535] shadow-md py-4" : "bg-[#112535] py-6"}`}>
+    <header className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#084063] shadow-md py-4" : "bg-[#084063] py-6"}`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
         {/* Logotipo e Nome Oficial */}
         <Link href="/" className="flex items-center gap-4">
-          <div className="w-10 h-10 md:w-12 md:h-12 relative flex-shrink-0">
-            <img src="/logo-branco.png" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain" />
+          <div className="w-10 h-10 md:w-16 md:h-12 relative flex-shrink-0">
+            {/* O NOME FOI ALTERADO PARA QUEBRAR A CACHE */}
+            <img src="/logo-oficial.jpg" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain mix-blend-screen" />
           </div>
           <span className="text-base md:text-xl font-light tracking-widest uppercase text-white">
             Monte do Pinheirinho
@@ -33,7 +33,7 @@ export default function Header() {
           <Link href="/eventos" className="hover:text-stone-300 transition-colors">Eventos</Link>
           <Link href="/regiao" className="hover:text-stone-300 transition-colors">Região</Link>
           <Link href="/contactos" className="hover:text-stone-300 transition-colors">Contactos</Link>
-          <Link href="/reservas" className="border border-white text-white px-8 py-3 hover:bg-white hover:text-[#112535] transition-colors">
+          <Link href="/reservas" className="border border-white text-white px-8 py-3 hover:bg-white hover:text-[#084063] transition-colors">
             Reservar
           </Link>
         </nav>
@@ -54,15 +54,15 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Menu Mobile Expandido (Gaveta Fluida) */}
+      {/* Menu Mobile Expandido */}
       {isOpen && (
-        <div className="md:hidden bg-[#112535] border-t border-white/10 absolute w-full left-0 top-full shadow-2xl">
+        <div className="md:hidden bg-[#084063] border-t border-white/10 absolute w-full left-0 top-full shadow-2xl">
           <div className="flex flex-col px-6 py-4">
             <Link href="/o-monte" onClick={() => setIsOpen(false)} className="text-white text-xs font-medium uppercase tracking-widest py-4 border-b border-white/10">O Monte</Link>
             <Link href="/eventos" onClick={() => setIsOpen(false)} className="text-white text-xs font-medium uppercase tracking-widest py-4 border-b border-white/10">Eventos</Link>
             <Link href="/regiao" onClick={() => setIsOpen(false)} className="text-white text-xs font-medium uppercase tracking-widest py-4 border-b border-white/10">Região</Link>
             <Link href="/contactos" onClick={() => setIsOpen(false)} className="text-white text-xs font-medium uppercase tracking-widest py-4 border-b border-white/10">Contactos</Link>
-            <Link href="/reservas" onClick={() => setIsOpen(false)} className="bg-white text-[#112535] text-xs font-medium uppercase tracking-widest px-5 py-4 mt-4 text-center hover:bg-stone-100 transition-colors">
+            <Link href="/reservas" onClick={() => setIsOpen(false)} className="bg-white text-[#084063] text-xs font-medium uppercase tracking-widest px-5 py-4 mt-4 text-center hover:bg-stone-100 transition-colors">
               Reservar Estadia
             </Link>
           </div>
