@@ -39,12 +39,12 @@ function CustomSelect({
 
   return (
     <div className="relative w-full" ref={selectRef}>
-      <label className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">{label}</label>
+      <label className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">{label}</label>
       <input type="hidden" name={name} value={value} />
       
       <div 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-3 border border-stone-200 bg-white text-stone-700 text-sm sm:text-base cursor-pointer flex justify-between items-center transition-colors hover:border-[#112535]"
+        className="w-full px-4 py-3 border border-stone-200 bg-white text-stone-700 text-sm sm:text-base cursor-pointer flex justify-between items-center transition-colors hover:border-[#084063]"
       >
         <span className="truncate pr-4">{selectedOption ? selectedOption.label : "Selecione uma opção..."}</span>
         <svg className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +61,7 @@ function CustomSelect({
                 onChange(option.value);
                 setIsOpen(false);
               }}
-              className={`px-4 py-3 text-sm cursor-pointer hover:bg-stone-50 transition-colors ${value === option.value ? "bg-stone-50 font-medium text-[#112535]" : "text-stone-600"}`}
+              className={`px-4 py-3 text-sm cursor-pointer hover:bg-stone-50 transition-colors ${value === option.value ? "bg-stone-50 font-medium text-[#084063]" : "text-stone-600"}`}
             >
               {option.label}
             </div>
@@ -297,7 +297,7 @@ export default function Reservas() {
     <div className="flex flex-col w-full bg-stone-50 min-h-screen pt-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16 w-full">
         <div className="text-center mb-10">
-          <h1 className="text-2xl md:text-3xl font-light uppercase tracking-widest text-[#112535] mb-3">
+          <h1 className="text-2xl md:text-3xl font-light uppercase tracking-widest text-[#084063] mb-3">
             Disponibilidade & Tarifas
           </h1>
           <p className="text-stone-500 font-light text-xs sm:text-sm tracking-wide max-w-xl mx-auto">
@@ -308,15 +308,15 @@ export default function Reservas() {
         {/* CAIXA DE REGRAS VISÍVEIS */}
         <div className="bg-white p-6 border border-stone-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-stone-600 font-light shadow-xs">
           <div className="border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-4">
-            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Capacidade & Suplementos</p>
+            <p className="font-medium uppercase tracking-widest text-[#084063] mb-1">Capacidade & Suplementos</p>
             <p>Incluído para até <strong>10 hóspedes</strong>. Máximo de <strong>12 hóspedes</strong> (+75€/noite por pessoa adicional).</p>
           </div>
           <div className="border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-4">
-            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Descontos de Estadia</p>
+            <p className="font-medium uppercase tracking-widest text-[#084063] mb-1">Descontos de Estadia</p>
             <p>• <strong>15% de desconto</strong> em 7+ noites.<br />• <strong>25% de desconto</strong> em estadias mensais (30+ noites).</p>
           </div>
           <div>
-            <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Regras de Reserva</p>
+            <p className="font-medium uppercase tracking-widest text-[#084063] mb-1">Regras de Reserva</p>
             <p>Época base: min. 2 noites | Maio/Junho: min. 3 | Julho: min. 4 | Agosto: min. 5 | Natal: min. 3 noites.</p>
           </div>
         </div>
@@ -324,7 +324,7 @@ export default function Reservas() {
         {/* CALENDÁRIO VISUAL OTIMIZADO MOBILE */}
         <div className="bg-white p-4 sm:p-8 md:p-10 shadow-sm border border-stone-200 mb-12">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-            <h2 className="text-base sm:text-lg font-light uppercase tracking-wider text-[#112535]">
+            <h2 className="text-base sm:text-lg font-light uppercase tracking-wider text-[#084063]">
               {monthNames[month]} {year}
             </h2>
             <div className="flex gap-2 w-full sm:w-auto justify-center">
@@ -348,7 +348,7 @@ export default function Reservas() {
           <div className="flex flex-wrap gap-4 sm:gap-6 mb-6 text-xs text-stone-500 font-light justify-center sm:justify-start">
             <div className="flex items-center gap-2"><span className="w-3 h-3 bg-white border border-stone-300"></span> Disponível</div>
             <div className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500"></span> Ocupado</div>
-            <div className="flex items-center gap-2"><span className="w-3 h-3 bg-[#112535]"></span> Selecionado</div>
+            <div className="flex items-center gap-2"><span className="w-3 h-3 bg-[#084063]"></span> Selecionado</div>
           </div>
 
           <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-medium mb-3">
@@ -371,13 +371,13 @@ export default function Reservas() {
               const isSelected = dateStr === checkIn || dateStr === checkOut;
               const isInRange = checkIn && checkOut && dateStr > checkIn && dateStr < checkOut;
 
-              let bgColor = "bg-white text-[#112535] border-stone-200 hover:border-[#112535]";
+              let bgColor = "bg-white text-[#084063] border-stone-200 hover:border-[#084063]";
               if (isPast || isOccupied) {
                 bgColor = isOccupied ? "bg-red-500 text-white border-red-500 cursor-not-allowed opacity-90" : "bg-stone-100 text-stone-400 border-stone-200 cursor-not-allowed";
               } else if (isSelected) {
-                bgColor = "bg-[#112535] text-white border-[#112535] font-medium";
+                bgColor = "bg-[#084063] text-white border-[#084063] font-medium";
               } else if (isInRange) {
-                bgColor = "bg-stone-100 text-[#112535] border-stone-300";
+                bgColor = "bg-stone-100 text-[#084063] border-stone-300";
               }
 
               const dayRate = getNightPricing(dateStr);
@@ -406,27 +406,27 @@ export default function Reservas() {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 sm:pb-8 border-b border-stone-100">
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Check-in *</label>
+                <label className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Check-in *</label>
                 <input 
                   required 
                   type="date" 
                   value={checkIn} 
                   onChange={(e) => setCheckIn(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Check-out *</label>
+                <label className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Check-out *</label>
                 <input 
                   required 
                   type="date" 
                   value={checkOut} 
                   onChange={(e) => setCheckOut(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
                 />
               </div>
               <div>
-                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nº Hóspedes (Máx. 12) *</label>
+                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Nº Hóspedes (Máx. 12) *</label>
                 <input 
                   required 
                   type="number" 
@@ -434,7 +434,7 @@ export default function Reservas() {
                   max="12"
                   value={guests}
                   onChange={(e) => setGuests(parseInt(e.target.value) || 1)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] text-sm sm:text-base rounded-none" 
                 />
               </div>
             </div>
@@ -461,7 +461,7 @@ export default function Reservas() {
                 <div className="md:col-span-2 bg-stone-50 p-5 sm:p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-0">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Resumo da Estadia</p>
-                    <p className="text-sm font-medium text-[#112535]">
+                    <p className="text-sm font-medium text-[#084063]">
                       {totalNights} noites ({guests} hóspedes {extraGuests > 0 ? `• Inclui ${extraGuests} hóspedes extra` : ""})
                     </p>
                     {discountPercent > 0 && (
@@ -472,22 +472,22 @@ export default function Reservas() {
                   </div>
                   <div className="text-right w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-200">
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Valor Estimado</p>
-                    <p className="text-2xl font-light text-[#112535]">{totalPrice}€</p>
+                    <p className="text-2xl font-light text-[#084063]">{totalPrice}€</p>
                   </div>
                 </div>
               )}
 
               <div className="relative z-0">
-                <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nome Completo *</label>
-                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
+                <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Nome Completo *</label>
+                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] text-sm sm:text-base rounded-none" />
               </div>
               <div className="relative z-0">
-                <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Email *</label>
-                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
+                <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Email *</label>
+                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] text-sm sm:text-base rounded-none" />
               </div>
               <div className="relative z-0">
-                <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Telemóvel *</label>
-                <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
+                <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Telemóvel *</label>
+                <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] text-sm sm:text-base rounded-none" />
               </div>
               
               <div className="relative z-10">
@@ -504,13 +504,13 @@ export default function Reservas() {
               </div>
 
               <div className="md:col-span-2 relative z-0">
-                <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Detalhes e Pedidos Especiais</label>
-                <textarea id="notes" name="notes" rows={4} placeholder="Indique eventuais pedidos especiais..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none text-sm sm:text-base rounded-none"></textarea>
+                <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Detalhes e Pedidos Especiais</label>
+                <textarea id="notes" name="notes" rows={4} placeholder="Indique eventuais pedidos especiais..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] resize-none text-sm sm:text-base rounded-none"></textarea>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#112535] focus:ring-[#112535]" />
+              <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#084063] focus:ring-[#084063]" />
               <label htmlFor="rgpd" className="text-xs sm:text-sm font-light text-stone-500 leading-relaxed">
                 Autorizo a recolha e o tratamento dos meus dados pessoais pelo Monte do Pinheirinho, exclusivamente para efeitos de gestão da reserva ou evento, de acordo com o RGPD.
               </label>
@@ -528,7 +528,7 @@ export default function Reservas() {
                 type="button"
                 disabled={isSubmitting}
                 onClick={(e) => handleActionSubmit('reservar', e)}
-                className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-[#112535] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70 transition-opacity"
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-[#084063] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70 transition-opacity"
               >
                 {isSubmitting ? "A Processar..." : "Reservar de Imediato (Pagar Sinal)"}
               </button>
@@ -536,7 +536,7 @@ export default function Reservas() {
                 type="button"
                 disabled={isSubmitting}
                 onClick={(e) => handleActionSubmit('informacao', e)}
-                className="w-full sm:w-auto px-8 sm:px-10 py-4 border border-[#112535] text-[#112535] text-xs font-medium tracking-[0.2em] uppercase hover:bg-[#112535] hover:text-white disabled:opacity-70 transition-colors"
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 border border-[#084063] text-[#084063] text-xs font-medium tracking-[0.2em] uppercase hover:bg-[#084063] hover:text-white disabled:opacity-70 transition-colors"
               >
                 {isSubmitting ? "A Processar..." : "Pedir Apenas Informações"}
               </button>

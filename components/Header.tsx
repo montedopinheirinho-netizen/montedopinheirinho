@@ -20,7 +20,7 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-4">
           <div className="w-10 h-10 md:w-16 md:h-12 relative flex-shrink-0">
             {/* O NOME FOI ALTERADO PARA QUEBRAR A CACHE */}
-            <img src="/logo-oficial.JPG" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain mix-blend-screen" />
+            <img src="/logo.JPG" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain mix-blend-screen" />
           </div>
           <span className="text-base md:text-xl font-light tracking-widest uppercase text-white">
             Monte do Pinheirinho
