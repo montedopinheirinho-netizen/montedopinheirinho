@@ -50,7 +50,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row gap-16 items-center">
           <div className="w-full md:w-1/2">
             <img 
-              src="/foto-piscina.jpg" 
+              src="/foto-piscina.jpeg" 
               alt="Exterior e Lazer" 
               className="w-full h-[500px] object-cover bg-stone-200"
             />

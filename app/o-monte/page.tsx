@@ -17,7 +17,7 @@ export default function OMonte() {
       <section className="bg-stone-50 border-t border-stone-200">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
           <div className="h-72 md:h-[600px] w-full relative">
-            <img src="/quarto-principal.jpeg" alt="Quarto Principal" className="w-full h-full object-cover" />
+            <img src="/quarto-principal.JPG" alt="Quarto Principal" className="w-full h-full object-cover" />
           </div>
           <div className="p-10 md:p-20 flex flex-col justify-center">
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4">Descanso Absoluto</span>
