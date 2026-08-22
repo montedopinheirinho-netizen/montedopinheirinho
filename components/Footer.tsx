@@ -35,8 +35,8 @@ export default function Footer() {
           </p>
           <p>
             <span className="block text-xs tracking-widest uppercase text-white/50 mb-1">Email</span>
-            <a href="mailto:info@montedopinheirinho.com" className="hover:text-white transition-colors">
-              info@montedopinheirinho.com
+            <a href="mailto:montedopinheirinho@gmail.com" className="hover:text-white transition-colors">
+              montedopinheirinho@gmail.com
             </a>
           </p>
         </div>

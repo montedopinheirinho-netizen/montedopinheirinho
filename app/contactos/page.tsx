@@ -50,7 +50,7 @@ export default function Contactos() {
               </div>
               <div>
                 <p className="font-medium uppercase tracking-widest text-xs mb-2">Email</p>
-                <p className="text-stone-500">info@montedopinheirinho.com</p>
+                <p className="text-stone-500">montedopinheirinho@gmail.com</p>
               </div>
             </div>
           </div>
