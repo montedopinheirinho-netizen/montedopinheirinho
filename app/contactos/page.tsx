@@ -30,7 +30,10 @@ export default function Contactos() {
     setIsSubmitting(false);
   };
 
-  const locationQuery = "Monte+do+Pinheirinho+Foros+do+Moinho";
+  // Coordenadas absolutas extraídas do teu link para máxima precisão nos GPS
+  const lat = "37.9011002";
+  const lng = "-8.5109246";
+  const coordsQuery = `${lat},${lng}`;
 
   return (
     <div className="flex flex-col w-full bg-white text-[#112535] min-h-screen pt-12">
@@ -53,10 +56,10 @@ export default function Contactos() {
           </div>
           
           <div>
-            {/* Mapa Interativo Embutido */}
+            {/* Mapa Interativo Embutido de forma correta (Embed API) */}
             <div className="w-full h-80 mb-6 relative border border-stone-200 bg-stone-100">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3140.0!2d-8.69!3d38.01!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDAwJzAwLjAiTiA4wrA0MScwMC4wIlc!5e0!3m2!1spt-PT!2spt!4v1690000000000!5m2!1spt-PT!2spt" 
+                src={`https://maps.google.com/maps?q=${lat},${lng}&hl=pt-PT&z=16&output=embed`}
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
@@ -67,10 +70,11 @@ export default function Contactos() {
               ></iframe>
             </div>
             
+            {/* Botões direcionados pelas coordenadas absolutas */}
             <div className="grid grid-cols-3 gap-4">
-              <a href={`https://maps.google.com/?q=${locationQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Google Maps</a>
-              <a href={`http://maps.apple.com/?q=${locationQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Apple Maps</a>
-              <a href={`https://waze.com/ul?q=${locationQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Waze</a>
+              <a href={`https://maps.google.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Google Maps</a>
+              <a href={`http://maps.apple.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Apple Maps</a>
+              <a href={`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Waze</a>
             </div>
           </div>
         </div>
