@@ -13,24 +13,48 @@ export default function Contactos() {
     setStatusMessage({ type: null, text: "" });
 
     const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const phone = formData.get("phone") as string;
-    const guests = parseInt(formData.get("guests") as string) || 0;
-    const message = formData.get("message") as string;
+    
+    // Validação RGPD
+    if (!formData.get("rgpd")) {
+      setStatusMessage({ type: "error", text: "Por favor, aceite a política de privacidade para continuar." });
+      setIsSubmitting(false);
+      return;
+    }
 
-    const { error } = await supabase.from("contacts").insert([{ name, email, phone, guests, message }]);
+    const contactData = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      guests: parseInt(formData.get("guests") as string) || 0,
+      message: formData.get("message") as string,
+    };
+
+    // 1. Inserir na tabela do Supabase
+    const { error } = await supabase.from("contacts").insert([contactData]);
 
     if (error) {
-      setStatusMessage({ type: "error", text: "Ocorreu um erro. Por favor, tente novamente ou use o nosso email direto." });
-    } else {
-      setStatusMessage({ type: "success", text: "Mensagem enviada com sucesso. Entraremos em contacto brevemente." });
-      (e.target as HTMLFormElement).reset();
+      setStatusMessage({ type: "error", text: "Ocorreu um erro ao guardar o pedido. Por favor, tente novamente." });
+      setIsSubmitting(false);
+      return;
     }
+
+    // 2. Disparar emails via API do Resend
+    try {
+      await fetch('/api/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactData),
+      });
+
+      setStatusMessage({ type: "success", text: "Mensagem enviada com sucesso. Verifique o seu email e entraremos em contacto brevemente." });
+      (e.target as HTMLFormElement).reset();
+    } catch (err) {
+      setStatusMessage({ type: "error", text: "Mensagem guardada, mas houve um atraso no envio do email de notificação." });
+    }
+
     setIsSubmitting(false);
   };
 
-  // Coordenadas absolutas extraídas do teu link para máxima precisão nos GPS
   const lat = "37.9011002";
   const lng = "-8.5109246";
   const coordsQuery = `${lat},${lng}`;
@@ -56,7 +80,6 @@ export default function Contactos() {
           </div>
           
           <div>
-            {/* Mapa Interativo Embutido de forma correta (Embed API) */}
             <div className="w-full h-80 mb-6 relative border border-stone-200 bg-stone-100">
               <iframe 
                 src={`https://maps.google.com/maps?q=${lat},${lng}&hl=pt-PT&z=16&output=embed`}
@@ -70,7 +93,6 @@ export default function Contactos() {
               ></iframe>
             </div>
             
-            {/* Botões direcionados pelas coordenadas absolutas */}
             <div className="grid grid-cols-3 gap-4">
               <a href={`https://maps.google.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Google Maps</a>
               <a href={`http://maps.apple.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Apple Maps</a>
@@ -105,11 +127,21 @@ export default function Contactos() {
               <label htmlFor="message" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Mensagem *</label>
               <textarea required id="message" name="message" rows={5} className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors resize-none"></textarea>
             </div>
+
+            {/* Checkbox RGPD OBRIGATÓRIA */}
+            <div className="flex items-start gap-3">
+              <input type="checkbox" id="rgpd-contact" name="rgpd" required className="mt-1 border-stone-300 text-[#112535] focus:ring-[#112535]" />
+              <label htmlFor="rgpd-contact" className="text-xs font-light text-stone-500 leading-relaxed">
+                Autorizo o tratamento dos meus dados para efeitos de resposta ao meu pedido de contacto, de acordo com o RGPD.
+              </label>
+            </div>
+
             {statusMessage.text && (
               <div className={`p-4 text-sm font-light ${statusMessage.type === "success" ? "bg-green-50 text-green-900 border border-green-200" : "bg-red-50 text-red-900 border border-red-200"}`}>
                 {statusMessage.text}
               </div>
             )}
+            
             <button type="submit" disabled={isSubmitting} className="w-full px-8 py-4 bg-[#112535] text-white text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-70">
               {isSubmitting ? "A Enviar..." : "Enviar Pedido"}
             </button>

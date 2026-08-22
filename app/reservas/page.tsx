@@ -25,6 +25,7 @@ export default function Reservas() {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
+      booking_type: formData.get("booking_type") as string,
       language: formData.get("language") as string,
       check_in: formData.get("check_in") as string,
       check_out: formData.get("check_out") as string,
@@ -42,7 +43,7 @@ export default function Reservas() {
       return;
     } 
     
-    // 2. Disparar Email via API Interna (escondendo a Key)
+    // 2. Disparar Email via API Interna
     try {
       await fetch('/api/send-booking', {
         method: 'POST',
@@ -66,13 +67,30 @@ export default function Reservas() {
       <div className="max-w-4xl mx-auto px-6 py-16 w-full">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-light uppercase tracking-widest text-[#112535] mb-4">
-            Pedido de Reserva
+            Pedido de Reserva & Experiência
           </h1>
+          <p className="text-stone-500 font-light text-sm tracking-wide">
+            Selecione a tipologia pretendida para o seu refúgio no Alentejo.
+          </p>
         </div>
 
         <div className="bg-white p-8 md:p-12 shadow-sm border border-stone-200">
           <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8 border-b border-stone-100">
+            
+            {/* Bloco de Tipologia e Datas */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8 border-b border-stone-100">
+              <div className="md:col-span-2">
+                <label htmlFor="booking_type" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Tipologia de Reserva / Evento *</label>
+                <select required id="booking_type" name="booking_type" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-700">
+                  <option value="">Selecione uma opção...</option>
+                  <option value="Alojamento Exclusivo">Alojamento Exclusivo (Estadia Rural)</option>
+                  <option value="Evento Corporativo / Team Building">Evento Corporativo / Team Building</option>
+                  <option value="Casamento ou Celebração Privada">Casamento ou Celebração Privada</option>
+                  <option value="Retiro ou Produção Fotográfica">Retiro ou Produção Fotográfica</option>
+                  <option value="Outro Pedido Não Standard">Outro Pedido / Personalizado</option>
+                </select>
+              </div>
+
               <div>
                 <label htmlFor="check_in" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Check-in *</label>
                 <input required type="date" min={today} id="check_in" name="check_in" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600" />
@@ -81,13 +99,10 @@ export default function Reservas() {
                 <label htmlFor="check_out" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Check-out *</label>
                 <input required type="date" min={today} id="check_out" name="check_out" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600" />
               </div>
-              <div>
-                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Hóspedes *</label>
-                <input required type="number" min="1" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
-              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8 border-b border-stone-100">
+            {/* Dados Pessoais e Idioma */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8 border-b border-stone-100">
               <div>
                 <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nome Completo *</label>
                 <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
@@ -101,15 +116,19 @@ export default function Reservas() {
                 <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
               </div>
               <div>
+                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nº Hóspedes / Participantes *</label>
+                <input required type="number" min="1" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
+              </div>
+              <div>
                 <label htmlFor="language" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Idioma / Language *</label>
                 <select required id="language" name="language" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white">
                   <option value="pt">Português (PT)</option>
                   <option value="en">English (EN)</option>
                 </select>
               </div>
-              <div className="md:col-span-2">
-                <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Pedidos Especiais / Notas</label>
-                <textarea id="notes" name="notes" rows={4} className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none"></textarea>
+              <div className="md:col-span-3">
+                <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Detalhes e Pedidos Especiais</label>
+                <textarea id="notes" name="notes" rows={4} placeholder="Descreva os detalhes específicos do seu evento ou estadia..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none"></textarea>
               </div>
             </div>
 
@@ -117,7 +136,7 @@ export default function Reservas() {
             <div className="flex items-start gap-3">
               <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 border-stone-300 text-[#112535] focus:ring-[#112535]" />
               <label htmlFor="rgpd" className="text-sm font-light text-stone-500 leading-relaxed">
-                Autorizo a recolha e o tratamento dos meus dados pessoais (nome, email e telemóvel) pelo Monte do Pinheirinho, exclusivamente para efeitos de gestão da reserva e contacto direto, de acordo com o Regulamento Geral de Proteção de Dados (RGPD).
+                Autorizo a recolha e o tratamento dos meus dados pessoais pelo Monte do Pinheirinho, exclusivamente para efeitos de gestão da reserva ou evento, de acordo com o RGPD.
               </label>
             </div>
 
