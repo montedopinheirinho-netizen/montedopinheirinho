@@ -60,7 +60,7 @@ export default function Contactos() {
   const coordsQuery = `${lat},${lng}`;
 
   return (
-    <div className="flex flex-col w-full bg-white text-[#112535] min-h-screen pt-12">
+    <div className="flex flex-col w-full bg-white text-[#084063] min-h-screen pt-12">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 py-16 w-full">
         
         {/* Bloco de Informação e Mapa */}
@@ -94,9 +94,9 @@ export default function Contactos() {
             </div>
             
             <div className="grid grid-cols-3 gap-4">
-              <a href={`https://maps.google.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Google Maps</a>
-              <a href={`http://maps.apple.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Apple Maps</a>
-              <a href={`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`} target="_blank" rel="noreferrer" className="border border-[#112535] text-[#112535] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#112535] hover:text-white transition-colors">Waze</a>
+              <a href={`https://maps.google.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#084063] text-[#084063] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#084063] hover:text-white transition-colors">Google Maps</a>
+              <a href={`http://maps.apple.com/?q=${coordsQuery}`} target="_blank" rel="noreferrer" className="border border-[#084063] text-[#084063] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#084063] hover:text-white transition-colors">Apple Maps</a>
+              <a href={`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`} target="_blank" rel="noreferrer" className="border border-[#084063] text-[#084063] py-3 text-[10px] sm:text-xs tracking-widest uppercase text-center hover:bg-[#084063] hover:text-white transition-colors">Waze</a>
             </div>
           </div>
         </div>
@@ -107,30 +107,30 @@ export default function Contactos() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nome *</label>
-                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors" />
+                <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Nome *</label>
+                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
               <div>
-                <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Email *</label>
-                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors" />
+                <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Email *</label>
+                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Telemóvel</label>
-                <input type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors" />
+                <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Telemóvel</label>
+                <input type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
               <div>
-                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Hóspedes</label>
-                <input type="number" min="1" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors" />
+                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Hóspedes</label>
+                <input type="number" min="1" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
             </div>
             <div>
-              <label htmlFor="message" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Mensagem *</label>
-              <textarea required id="message" name="message" rows={5} className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white transition-colors resize-none"></textarea>
+              <label htmlFor="message" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Mensagem *</label>
+              <textarea required id="message" name="message" rows={5} className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors resize-none"></textarea>
             </div>
 
             {/* Checkbox RGPD OBRIGATÓRIA */}
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="rgpd-contact" name="rgpd" required className="mt-1 border-stone-300 text-[#112535] focus:ring-[#112535]" />
+              <input type="checkbox" id="rgpd-contact" name="rgpd" required className="mt-1 border-stone-300 text-[#084063] focus:ring-[#084063]" />
               <label htmlFor="rgpd-contact" className="text-xs font-light text-stone-500 leading-relaxed">
                 Autorizo o tratamento dos meus dados para efeitos de resposta ao meu pedido de contacto, de acordo com o RGPD.
               </label>
@@ -142,7 +142,7 @@ export default function Contactos() {
               </div>
             )}
             
-            <button type="submit" disabled={isSubmitting} className="w-full px-8 py-4 bg-[#112535] text-white text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-70">
+            <button type="submit" disabled={isSubmitting} className="w-full px-8 py-4 bg-[#084063] text-white text-sm tracking-widest uppercase hover:opacity-90 transition-opacity disabled:opacity-70">
               {isSubmitting ? "A Enviar..." : "Enviar Pedido"}
             </button>
           </form>
