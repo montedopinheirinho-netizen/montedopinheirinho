@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     const adminHtml = `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
         <h2 style="color: #112535; border-bottom: 2px solid #112535; padding-bottom: 10px;">
-          ${isImmediateBooking ? "🚨 NOVA PRÉ-RESERVA (COM PEDIDO DE PAGAMENTO)" : "📩 NOVO PEDIDO DE INFORMAÇÕES"}
+          ${isImmediateBooking ? "NOVA PRÉ-RESERVA (COM PEDIDO DE PAGAMENTO)" : "📩 NOVO PEDIDO DE INFORMAÇÕES"}
         </h2>
         <ul style="list-style: none; padding: 0; line-height: 2;">
           <li><strong>Ação do Cliente:</strong> ${isImmediateBooking ? "Reservar de Imediato" : "Pedir Informações"}</li>
