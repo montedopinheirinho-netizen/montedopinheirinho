@@ -5,14 +5,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, check_in, check_out, guests, notes, language } = await request.json();
+    const { name, email, phone, booking_type, check_in, check_out, guests, notes, language } = await request.json();
 
+    // 1. Email para o Cliente
     const content = {
       pt: {
         subject: "Recebemos o seu pedido - Monte do Pinheirinho",
         title: "O Seu Refúgio Exclusivo",
         greeting: `Olá ${name},`,
-        message: "Confirmamos a receção do seu pedido de reserva. A nossa equipa está a analisar a disponibilidade do nosso calendário para as seguintes datas:",
+        message: `Confirmamos a receção do seu pedido para "${booking_type}". A nossa equipa está a analisar a disponibilidade para as seguintes datas:`,
         dates: `${check_in} a ${check_out}`,
         footer: "Entraremos em contacto muito brevemente para finalizar os detalhes. Até lá, comece a sonhar com a planície alentejana.",
         button: "Explorar a Região",
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
         subject: "We received your request - Monte do Pinheirinho",
         title: "Your Exclusive Retreat",
         greeting: `Hello ${name},`,
-        message: "We confirm the receipt of your booking request. Our team is currently reviewing our calendar's availability for the following dates:",
+        message: `We confirm the receipt of your request for "${booking_type}". Our team is reviewing availability for the following dates:`,
         dates: `${check_in} to ${check_out}`,
         footer: "We will reach out to you shortly to finalize the details. Until then, start dreaming about the Alentejo plains.",
         button: "Explore the Region",
@@ -58,40 +59,40 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    // 1. Email para o cliente (com o "carteiro fantasma")
     await resend.emails.send({
-      from: 'Monte do Pinheirinho <reservas@montedopinheirinho.com>', 
-      to: email, 
-      replyTo: 'montedopinheirinho@gmail.com', // Se o cliente responder, vem parar a ti
+      from: 'Monte do Pinheirinho <reservas@montedopinheirinho.com>',
+      to: email,
+      replyTo: 'montedopinheirinho@gmail.com',
       subject: t.subject,
       html: htmlTemplate,
     });
 
+    // 2. Alerta interno detalhado para o teu Gmail
     const adminHtmlTemplate = `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-        <h2 style="color: #112535; border-bottom: 2px solid #112535; padding-bottom: 10px;">Novo Pedido de Reserva</h2>
+        <h2 style="color: #112535; border-bottom: 2px solid #112535; padding-bottom: 10px;">🚨 NOVO PEDIDO: ${booking_type.toUpperCase()}</h2>
         <ul style="list-style: none; padding: 0; line-height: 2;">
+          <li><strong>Tipologia:</strong> ${booking_type}</li>
           <li><strong>Nome:</strong> ${name}</li>
           <li><strong>Email:</strong> ${email}</li>
           <li><strong>Telemóvel:</strong> ${phone}</li>
           <li><strong>Check-in:</strong> ${check_in}</li>
           <li><strong>Check-out:</strong> ${check_out}</li>
           <li><strong>Hóspedes:</strong> ${guests}</li>
-          <li><strong>Idioma Selecionado:</strong> ${language.toUpperCase()}</li>
+          <li><strong>Idioma:</strong> ${language.toUpperCase()}</li>
           <li><strong>Notas Especiais:</strong> ${notes || 'Nenhuma nota adicionada.'}</li>
         </ul>
         <p style="margin-top: 30px; font-size: 12px; color: #666;">
-          <em>Dica: Podes clicar em "Responder" neste email e a tua resposta será enviada diretamente para o endereço do cliente (${email}).</em>
+          <em>Podes clicar em "Responder" neste email para falar diretamente com o cliente (${email}).</em>
         </p>
       </div>
     `;
 
-    // 2. Alerta interno (Cai no teu Gmail)
     await resend.emails.send({
       from: 'Site Monte do Pinheirinho <reservas@montedopinheirinho.com>',
       to: 'montedopinheirinho@gmail.com',
-      replyTo: email, // Permite responder diretamente ao cliente
-      subject: `NOVO PEDIDO DE INFORMAÇÃO: ${name} (${check_in} a ${check_out})`,
+      replyTo: email,
+      subject: `🚨 [${booking_type}] ${name} (${check_in} a ${check_out})`,
       html: adminHtmlTemplate,
     });
 
