@@ -20,14 +20,14 @@ export default function Reservas() {
       const { data, error } = await supabase
         .from("booking_requests")
         .select("check_in, check_out, status")
-        .in("status", ["confirmado", "pendente"]);
+        .in("status", ["confirmado", "pendente", "externo"]);
 
       if (!error && data) {
         let dates: string[] = [];
         data.forEach((booking) => {
           let start = new Date(booking.check_in);
           let end = new Date(booking.check_out);
-          end.setDate(end.getDate() + 2); // Buffer de 2 dias de limpeza/manutenção
+          end.setDate(end.getDate() + 2); // Buffer técnico de 2 dias para limpeza e manutenção
           
           while (start < end) {
             dates.push(start.toISOString().split("T")[0]);
@@ -99,12 +99,20 @@ export default function Reservas() {
 
   const totalPrice = Math.round((subtotal - discountAmount) * 100) / 100;
 
-  const handleActionSubmit = async (actionType: 'reservar' | 'informacao', e: React.FormEvent<HTMLFormElement>) => {
+  const handleActionSubmit = async (actionType: 'reservar' | 'informacao', e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus({ type: null, text: "" });
 
-    const formData = new FormData(e.currentTarget);
+    // Correção: Obter o formulário diretamente a partir do botão clicado
+    const form = e.currentTarget.form;
+    if (!form) {
+      setStatus({ type: "error", text: "Erro ao processar o formulário. Tente novamente." });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const formData = new FormData(form);
     
     if (!formData.get("rgpd")) {
       setStatus({ type: "error", text: "Por favor, aceite a política de privacidade para continuar." });
@@ -141,7 +149,7 @@ export default function Reservas() {
       guests: guests,
       notes: formData.get("notes") as string,
       total_price: bookingType === "Alojamento Exclusivo" ? totalPrice : 0,
-      action_type: actionType, // 'reservar' ou 'informacao'
+      action_type: actionType,
       status: actionType === 'reservar' ? 'pendente_pagamento' : 'pendente'
     };
 
@@ -165,7 +173,7 @@ export default function Reservas() {
         : "Pedido de informações enviado com sucesso. Entraremos em contacto brevemente.";
 
       setStatus({ type: "success", text: successText });
-      (e.target as HTMLFormElement).reset();
+      form.reset();
       setCheckIn("");
       setCheckOut("");
       setGuests(2);
@@ -197,7 +205,6 @@ export default function Reservas() {
       if (dateStr < checkIn) {
         setCheckIn(dateStr);
       } else {
-        // Validar se o intervalo cumpre a regra de noites mínimas da data de check-in
         const rule = getNightPricing(checkIn);
         const tempStart = new Date(checkIn);
         const tempEnd = new Date(dateStr);
@@ -216,18 +223,18 @@ export default function Reservas() {
 
   return (
     <div className="flex flex-col w-full bg-stone-50 min-h-screen pt-20">
-      <div className="max-w-5xl mx-auto px-6 py-16 w-full">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-light uppercase tracking-widest text-[#112535] mb-4">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16 w-full">
+        <div className="text-center mb-10">
+          <h1 className="text-2xl md:text-3xl font-light uppercase tracking-widest text-[#112535] mb-3">
             Disponibilidade & Tarifas
           </h1>
-          <p className="text-stone-500 font-light text-sm tracking-wide">
+          <p className="text-stone-500 font-light text-xs sm:text-sm tracking-wide max-w-xl mx-auto">
             Consulte o calendário em tempo real, calcule o seu orçamento e decida se pretende reservar de imediato ou pedir mais informações.
           </p>
         </div>
 
         {/* CAIXA DE REGRAS VISÍVEIS */}
-        <div className="bg-white p-6 border border-stone-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-stone-600 font-light">
+        <div className="bg-white p-6 border border-stone-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-stone-600 font-light shadow-xs">
           <div className="border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-4">
             <p className="font-medium uppercase tracking-widest text-[#112535] mb-1">Capacidade & Suplementos</p>
             <p>Incluído para até <strong>10 hóspedes</strong>. Máximo de <strong>12 hóspedes</strong> (+75€/noite por pessoa adicional).</p>
@@ -242,43 +249,43 @@ export default function Reservas() {
           </div>
         </div>
 
-        {/* CALENDÁRIO VISUAL */}
-        <div className="bg-white p-8 md:p-10 shadow-sm border border-stone-200 mb-12">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-lg font-light uppercase tracking-wider text-[#112535]">
+        {/* CALENDÁRIO VISUAL OTIMIZADO MOBILE */}
+        <div className="bg-white p-4 sm:p-8 md:p-10 shadow-sm border border-stone-200 mb-12">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+            <h2 className="text-base sm:text-lg font-light uppercase tracking-wider text-[#112535]">
               {monthNames[month]} {year}
             </h2>
-            <div className="flex gap-2">
+            <div className="flex gap-2 w-full sm:w-auto justify-center">
               <button 
                 type="button" 
                 onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}
-                className="px-4 py-2 border border-stone-200 text-xs uppercase tracking-widest hover:bg-stone-50 transition-colors"
+                className="flex-1 sm:flex-none px-4 py-2 border border-stone-200 text-xs uppercase tracking-widest hover:bg-stone-50 transition-colors"
               >
                 Anterior
               </button>
               <button 
                 type="button" 
                 onClick={() => setCurrentMonth(new Date(year, month + 1, 1))}
-                className="px-4 py-2 border border-stone-200 text-xs uppercase tracking-widest hover:bg-stone-50 transition-colors"
+                className="flex-1 sm:flex-none px-4 py-2 border border-stone-200 text-xs uppercase tracking-widest hover:bg-stone-50 transition-colors"
               >
                 Seguinte
               </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-6 mb-6 text-xs text-stone-500 font-light">
+          <div className="flex flex-wrap gap-4 sm:gap-6 mb-6 text-xs text-stone-500 font-light justify-center sm:justify-start">
             <div className="flex items-center gap-2"><span className="w-3 h-3 bg-white border border-stone-300"></span> Disponível</div>
-            <div className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500"></span> Ocupado / Manutenção</div>
+            <div className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500"></span> Ocupado</div>
             <div className="flex items-center gap-2"><span className="w-3 h-3 bg-[#112535]"></span> Selecionado</div>
           </div>
 
-          <div className="grid grid-cols-7 gap-2 text-center text-xs uppercase tracking-widest text-stone-400 font-medium mb-3">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs uppercase tracking-widest text-stone-400 font-medium mb-3">
             <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
           </div>
 
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2">
             {Array.from({ length: firstDayOfMonth }).map((_, index) => (
-              <div key={`empty-${index}`} className="h-12 md:h-16 bg-transparent"></div>
+              <div key={`empty-${index}`} className="h-12 sm:h-16 md:h-20 bg-transparent"></div>
             ))}
 
             {Array.from({ length: daysInMonth }).map((_, index) => {
@@ -294,7 +301,7 @@ export default function Reservas() {
 
               let bgColor = "bg-white text-[#112535] border-stone-200 hover:border-[#112535]";
               if (isPast || isOccupied) {
-                bgColor = isOccupied ? "bg-red-500 text-white border-red-500 cursor-not-allowed" : "bg-stone-100 text-stone-400 border-stone-200 cursor-not-allowed";
+                bgColor = isOccupied ? "bg-red-500 text-white border-red-500 cursor-not-allowed opacity-90" : "bg-stone-100 text-stone-400 border-stone-200 cursor-not-allowed";
               } else if (isSelected) {
                 bgColor = "bg-[#112535] text-white border-[#112535] font-medium";
               } else if (isInRange) {
@@ -309,11 +316,11 @@ export default function Reservas() {
                   type="button"
                   disabled={isPast || isOccupied}
                   onClick={() => handleDateClick(dateStr)}
-                  className={`h-14 md:h-20 border flex flex-col items-center justify-between p-2 text-xs transition-all ${bgColor}`}
+                  className={`h-12 sm:h-16 md:h-20 border flex flex-col items-center justify-between p-1.5 sm:p-2 text-xs transition-all ${bgColor}`}
                 >
-                  <span className="font-medium text-sm">{dayNum}</span>
+                  <span className="font-medium text-xs sm:text-sm">{dayNum}</span>
                   {!isPast && !isOccupied && (
-                    <span className="text-[9px] opacity-70 hidden sm:block">{dayRate.price}€</span>
+                    <span className="text-[8px] sm:text-[9px] opacity-70 hidden xs:block">{dayRate.price}€</span>
                   )}
                 </button>
               );
@@ -321,11 +328,11 @@ export default function Reservas() {
           </div>
         </div>
 
-        {/* FORMULÁRIO COM DUPLA OPÇÃO */}
-        <div className="bg-white p-8 md:p-12 shadow-sm border border-stone-200">
-          <form className="space-y-8">
+        {/* FORMULÁRIO RESPONSIVO */}
+        <div className="bg-white p-6 sm:p-8 md:p-12 shadow-sm border border-stone-200">
+          <form className="space-y-6 sm:space-y-8">
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8 border-b border-stone-100">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 sm:pb-8 border-b border-stone-100">
               <div>
                 <label className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Check-in *</label>
                 <input 
@@ -333,7 +340,7 @@ export default function Reservas() {
                   type="date" 
                   value={checkIn} 
                   onChange={(e) => setCheckIn(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
                 />
               </div>
               <div>
@@ -343,7 +350,7 @@ export default function Reservas() {
                   type="date" 
                   value={checkOut} 
                   onChange={(e) => setCheckOut(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-600 text-sm sm:text-base rounded-none" 
                 />
               </div>
               <div>
@@ -355,12 +362,12 @@ export default function Reservas() {
                   max="12"
                   value={guests}
                   onChange={(e) => setGuests(parseInt(e.target.value) || 1)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" 
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" 
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8 border-b border-stone-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 sm:pb-8 border-b border-stone-100">
               <div className="md:col-span-2">
                 <label htmlFor="booking_type" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Tipologia de Reserva / Evento *</label>
                 <select 
@@ -368,7 +375,7 @@ export default function Reservas() {
                   id="booking_type" 
                   value={bookingType}
                   onChange={(e) => setBookingType(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-700"
+                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-700 text-sm sm:text-base rounded-none"
                 >
                   <option value="Alojamento Exclusivo">Alojamento Exclusivo (Estadia Rural com Preço Automático)</option>
                   <option value="Evento Corporativo / Team Building">Evento Corporativo / Team Building (Orçamento Sob Consulta)</option>
@@ -378,7 +385,7 @@ export default function Reservas() {
               </div>
 
               {bookingType === "Alojamento Exclusivo" && checkIn && checkOut && checkIn < checkOut && (
-                <div className="md:col-span-2 bg-stone-50 p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="md:col-span-2 bg-stone-50 p-5 sm:p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Resumo da Estadia</p>
                     <p className="text-sm font-medium text-[#112535]">
@@ -390,7 +397,7 @@ export default function Reservas() {
                       </p>
                     )}
                   </div>
-                  <div className="text-right">
+                  <div className="text-right w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-200">
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Valor Estimado</p>
                     <p className="text-2xl font-light text-[#112535]">{totalPrice}€</p>
                   </div>
@@ -399,32 +406,32 @@ export default function Reservas() {
 
               <div>
                 <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nome Completo *</label>
-                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
+                <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
               <div>
                 <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Email *</label>
-                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
+                <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
               <div>
                 <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Telemóvel *</label>
-                <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535]" />
+                <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
               <div>
                 <label htmlFor="language" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Idioma / Language *</label>
-                <select required id="language" name="language" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white">
+                <select required id="language" name="language" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-sm sm:text-base rounded-none">
                   <option value="pt">Português (PT)</option>
                   <option value="en">English (EN)</option>
                 </select>
               </div>
               <div className="md:col-span-2">
                 <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Detalhes e Pedidos Especiais</label>
-                <textarea id="notes" name="notes" rows={4} placeholder="Indique eventuais pedidos especiais..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none"></textarea>
+                <textarea id="notes" name="notes" rows={4} placeholder="Indique eventuais pedidos especiais..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none text-sm sm:text-base rounded-none"></textarea>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 border-stone-300 text-[#112535] focus:ring-[#112535]" />
-              <label htmlFor="rgpd" className="text-sm font-light text-stone-500 leading-relaxed">
+              <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#112535] focus:ring-[#112535]" />
+              <label htmlFor="rgpd" className="text-xs sm:text-sm font-light text-stone-500 leading-relaxed">
                 Autorizo a recolha e o tratamento dos meus dados pessoais pelo Monte do Pinheirinho, exclusivamente para efeitos de gestão da reserva ou evento, de acordo com o RGPD.
               </label>
             </div>
@@ -435,21 +442,21 @@ export default function Reservas() {
               </div>
             )}
 
-            {/* BOTÕES DE DUPLA AÇÃO */}
+            {/* BOTÕES DE DUPLA AÇÃO OTIMIZADOS MOBILE */}
             <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 type="button"
                 disabled={isSubmitting}
-                onClick={(e) => handleActionSubmit('reservar', e as unknown as React.FormEvent<HTMLFormElement>)}
-                className="px-10 py-4 bg-[#112535] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70 transition-opacity"
+                onClick={(e) => handleActionSubmit('reservar', e)}
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-[#112535] text-white text-xs font-medium tracking-[0.2em] uppercase hover:opacity-90 disabled:opacity-70 transition-opacity"
               >
                 {isSubmitting ? "A Processar..." : "Reservar de Imediato (Pagar Sinal)"}
               </button>
               <button 
                 type="button"
                 disabled={isSubmitting}
-                onClick={(e) => handleActionSubmit('informacao', e as unknown as React.FormEvent<HTMLFormElement>)}
-                className="px-10 py-4 border border-[#112535] text-[#112535] text-xs font-medium tracking-[0.2em] uppercase hover:bg-[#112535] hover:text-white disabled:opacity-70 transition-colors"
+                onClick={(e) => handleActionSubmit('informacao', e)}
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 border border-[#112535] text-[#112535] text-xs font-medium tracking-[0.2em] uppercase hover:bg-[#112535] hover:text-white disabled:opacity-70 transition-colors"
               >
                 {isSubmitting ? "A Processar..." : "Pedir Apenas Informações"}
               </button>
