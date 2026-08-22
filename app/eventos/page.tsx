@@ -20,7 +20,8 @@ export default function Eventos() {
       <section className="bg-stone-50 border-t border-stone-200">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
           <div className="h-72 md:h-[500px] w-full relative">
-            <img src="/eventos-casamento.jpg" alt="Casamentos e Jantares Privados" className="w-full h-full object-cover" />
+            {/* Atualizado para eventos-casamento.png */}
+            <img src="/eventos-casamento.png" alt="Casamentos e Jantares Privados" className="w-full h-full object-cover" />
           </div>
           <div className="p-10 md:p-20 flex flex-col justify-center">
             <h2 className="text-2xl font-light uppercase tracking-widest mb-6">Celebrações Privadas</h2>
@@ -44,7 +45,8 @@ export default function Eventos() {
             </Link>
           </div>
           <div className="h-72 md:h-[500px] w-full relative order-first md:order-last">
-            <img src="/eventos-corporate.jpg" alt="Eventos Corporativos" className="w-full h-full object-cover" />
+            {/* Atualizado para eventos-corporate.png */}
+            <img src="/eventos-corporate.png" alt="Eventos Corporativos" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>

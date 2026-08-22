@@ -6,10 +6,10 @@ export default function Home() {
       
       {/* 1. HERO SECTION MINIMALISTA */}
       <section className="relative h-screen w-full flex items-end pb-24 justify-center">
-        {/* A imagem de fundo puxa o ficheiro "foto-hero.jpg" da pasta public */}
+        {/* Atualizado para foto-hero.png */}
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
-          style={{ backgroundImage: "url('/foto-hero.jpg')", backgroundColor: "#112535" }} 
+          style={{ backgroundImage: "url('/foto-hero.png')", backgroundColor: "#112535" }} 
         />
         <div className="absolute inset-0 bg-black/20 z-10" />
 
@@ -35,8 +35,9 @@ export default function Home() {
             </Link>
           </div>
           <div className="w-full md:w-1/2">
+            {/* Atualizado para foto-espaco.jpeg */}
             <img 
-              src="/foto-espaco.jpg" 
+              src="/foto-espaco.jpeg" 
               alt="Casa de Campo no Alentejo" 
               className="w-full h-[500px] object-cover bg-stone-100"
             />
