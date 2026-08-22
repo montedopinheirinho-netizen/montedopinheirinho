@@ -41,7 +41,7 @@ export default function OMonte() {
       <section className="bg-white">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
           <div className="h-72 md:h-[600px] w-full relative">
-            <img src="/quarto-principal.jpg" alt="Quarto Principal" className="w-full h-full object-cover" />
+            <img src="/quarto-principal.JPG" alt="Quarto Principal" className="w-full h-full object-cover" />
           </div>
           <div className="p-10 md:p-20 flex flex-col justify-center">
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4">Descanso Absoluto</span>
@@ -96,7 +96,7 @@ export default function OMonte() {
         </div>
       </section>
 
-      {/* 5. GALERIA DE IMAGENS (CORRIGIDO PARA EXTENSÕES MINÚSCULAS) */}
+      {/* 5. GALERIA DE IMAGENS (COM AS EXTENSÕES EXATAS .JPG) */}
       <section className="py-24 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -112,10 +112,10 @@ export default function OMonte() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-            <img src="/galeria-1.jpg" alt="Galeria 1" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
-            <img src="/galeria-2.jpg" alt="Galeria 2" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
-            <img src="/galeria-3.jpg" alt="Galeria 3" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
-            <img src="/galeria-4.jpg" alt="Galeria 4" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-1.JPG" alt="Galeria 1" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-2.JPG" alt="Galeria 2" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-3.JPG" alt="Galeria 3" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-4.JPG" alt="Galeria 4" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
             <img src="/galeria-5.jpeg" alt="Galeria 5" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
             
             <img src="/galeria-6.jpeg" alt="Galeria 6" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
