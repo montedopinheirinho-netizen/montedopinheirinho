@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export default function OMonte() {
   return (
-    <div className="flex flex-col w-full bg-white text-[#112535] pt-20">
+    <div className="flex flex-col w-full bg-white text-[#084063] pt-20">
       
       {/* 1. HERO / INTRODUÇÃO */}
       <section className="px-6 py-16 md:py-24 text-center max-w-3xl mx-auto">
         <h1 className="text-3xl md:text-5xl font-light uppercase tracking-widest mb-6">
           A Sua Casa de Campo
         </h1>
-        <div className="w-12 h-[1px] bg-[#112535] mx-auto mb-8"></div>
+        <div className="w-12 h-[1px] bg-[#084063] mx-auto mb-8"></div>
         <p className="text-stone-500 font-light leading-relaxed text-sm md:text-base">
           6 hectares de privacidade absoluta no Baixo Alentejo, a apenas 1h15 de Lisboa e a 20 minutos das praias da Costa Vicentina. Um refúgio pensado para acolher o seu grupo com total conforto, unindo a traça típica alentejana a comodidades de excelência.
         </p>
@@ -47,9 +47,9 @@ export default function OMonte() {
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4">Descanso Absoluto</span>
             <h2 className="text-2xl md:text-3xl font-light uppercase tracking-widest mb-6">Quartos Acolhedores</h2>
             <ul className="space-y-4 text-stone-500 font-light text-sm md:text-base">
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Cinco quartos confortáveis decorados com detalhe e harmonia para o descanso do seu grupo.</li>
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Divisões versáteis equipadas com camas de casal e camas individuais de apoio.</li>
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Duas casas de banho completas (com bidé e chuveiro) para total conveniência.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Cinco quartos confortáveis decorados com detalhe e harmonia para o descanso do seu grupo.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Divisões versáteis equipadas com camas de casal e camas individuais de apoio.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Duas casas de banho completas (com bidé e chuveiro) para total conveniência.</li>
             </ul>
           </div>
         </div>
@@ -59,9 +59,9 @@ export default function OMonte() {
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4">Convívio</span>
             <h2 className="text-2xl md:text-3xl font-light uppercase tracking-widest mb-6">Zonas Comuns</h2>
             <ul className="space-y-4 text-stone-500 font-light text-sm md:text-base">
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Ampla sala de estar com televisão de ecrã plano e lareira, o verdadeiro coração da casa.</li>
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Comunicação direta com o alpendre exterior, unindo o conforto interior à natureza.</li>
-              <li className="flex items-start"><span className="text-[#112535] mr-3">•</span>Cozinha totalmente equipada com frigorífico, máquina de café e todos os utensílios essenciais.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Ampla sala de estar com televisão de ecrã plano e lareira, o verdadeiro coração da casa.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Comunicação direta com o alpendre exterior, unindo o conforto interior à natureza.</li>
+              <li className="flex items-start"><span className="text-[#084063] mr-3">•</span>Cozinha totalmente equipada com frigorífico, máquina de café e todos os utensílios essenciais.</li>
             </ul>
           </div>
           <div className="h-72 md:h-[600px] w-full relative order-first md:order-last">
@@ -71,7 +71,7 @@ export default function OMonte() {
       </section>
 
       {/* 4. COMODIDADES DE EXCELÊNCIA */}
-      <section className="py-24 px-6 bg-[#112535] text-white">
+      <section className="py-24 px-6 bg-[#084063] text-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-center text-2xl font-light uppercase tracking-widest mb-16">
             Comodidades de Excelência
@@ -105,7 +105,7 @@ export default function OMonte() {
               <p className="text-stone-500 font-light text-sm">Explore os recantos do Monte do Pinheirinho.</p>
             </div>
             <div className="mt-4 md:mt-0">
-              <Link href="/reservas" className="text-xs uppercase tracking-[0.2em] font-medium border-b border-[#112535] pb-1 hover:text-blue-700 transition-colors">
+              <Link href="/reservas" className="text-xs uppercase tracking-[0.2em] font-medium border-b border-[#084063] pb-1 hover:text-[#084063]/70 transition-colors">
                 Verificar Disponibilidade →
               </Link>
             </div>
