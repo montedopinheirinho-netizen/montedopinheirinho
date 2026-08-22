@@ -46,7 +46,7 @@ export default function Home() {
             <p className="text-[10px] uppercase tracking-widest text-stone-500">Avaliação Soberba</p>
           </div>
           <div>
-            <p className="text-xl md:text-2xl font-light mb-1">1h15 de Lisboa</p>
+            <p className="text-xl md:text-2xl font-light mb-1">1h30 de Lisboa</p>
             <p className="text-[10px] uppercase tracking-widest text-stone-500">Acesso Próximo</p>
           </div>
         </div>
