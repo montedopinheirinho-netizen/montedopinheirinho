@@ -25,16 +25,23 @@ export default function Footer() {
           </ul>
         </div>
         
-        {/* Coluna 3: Informação de Contacto e Morada */}
+        {/* Coluna 3: Informação Legal e Contactos */}
         <div>
-          <h3 className="text-white text-lg font-light tracking-widest uppercase mb-6">Contactos</h3>
-          <p className="mb-4">
-            <span className="block text-xs tracking-widest uppercase text-white/50 mb-1">Morada</span>
-            Monte do Pinheirinho, Foros do Moinho<br />
-            7540-000 Santiago do Cacém
-          </p>
-          <p>
-            <span className="block text-xs tracking-widest uppercase text-white/50 mb-1">Email</span>
+          <h3 className="text-white text-lg font-light tracking-widest uppercase mb-6">Legal & Apoio</h3>
+          <ul className="space-y-3 flex flex-col mb-6">
+            <Link href="/termos" className="hover:text-white transition-colors uppercase tracking-widest text-xs">Termos e Condições</Link>
+            <Link href="/privacidade" className="hover:text-white transition-colors uppercase tracking-widest text-xs">Política de Privacidade</Link>
+            <a 
+              href="https://www.livroreclamacoes.pt" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors uppercase tracking-widest text-xs text-stone-300 underline underline-offset-4"
+            >
+              Livro de Reclamações Eletrónico
+            </a>
+          </ul>
+          <p className="text-xs">
+            <span className="block tracking-widest uppercase text-white/50 mb-1">Email Direto</span>
             <a href="mailto:montedopinheirinho@gmail.com" className="hover:text-white transition-colors">
               montedopinheirinho@gmail.com
             </a>
