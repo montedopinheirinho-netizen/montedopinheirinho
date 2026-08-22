@@ -1,7 +1,77 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
+
+// --- Componente de Dropdown Personalizado ---
+interface Option {
+  value: string;
+  label: string;
+}
+
+function CustomSelect({ 
+  options, 
+  value, 
+  onChange, 
+  label, 
+  name 
+}: { 
+  options: Option[], 
+  value: string, 
+  onChange: (val: string) => void, 
+  label: string, 
+  name: string 
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find(o => o.value === value);
+
+  return (
+    <div className="relative w-full" ref={selectRef}>
+      <label className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">{label}</label>
+      <input type="hidden" name={name} value={value} />
+      
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-4 py-3 border border-stone-200 bg-white text-stone-700 text-sm sm:text-base cursor-pointer flex justify-between items-center transition-colors hover:border-[#112535]"
+      >
+        <span className="truncate pr-4">{selectedOption ? selectedOption.label : "Selecione uma opção..."}</span>
+        <svg className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1 bg-white border border-stone-200 shadow-lg max-h-60 overflow-y-auto">
+          {options.map((option) => (
+            <div
+              key={option.value}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+              className={`px-4 py-3 text-sm cursor-pointer hover:bg-stone-50 transition-colors ${value === option.value ? "bg-stone-50 font-medium text-[#112535]" : "text-stone-600"}`}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+// -------------------------------------------
 
 export default function Reservas() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,8 +83,10 @@ export default function Reservas() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [bookingType, setBookingType] = useState("Alojamento Exclusivo");
+  const [language, setLanguage] = useState("pt");
   const [guests, setGuests] = useState(2);
 
+  // Carregar bloqueios (Supabase + Buffer Limpeza 2 dias)
   useEffect(() => {
     async function fetchBookings() {
       const { data, error } = await supabase
@@ -27,7 +99,7 @@ export default function Reservas() {
         data.forEach((booking) => {
           let start = new Date(booking.check_in);
           let end = new Date(booking.check_out);
-          end.setDate(end.getDate() + 2); // Buffer técnico de 2 dias para limpeza e manutenção
+          end.setDate(end.getDate() + 2); // Buffer de 2 dias
           
           while (start < end) {
             dates.push(start.toISOString().split("T")[0]);
@@ -40,6 +112,7 @@ export default function Reservas() {
     fetchBookings();
   }, []);
 
+  // Motor Dinâmico de Preços & Regras
   const getNightPricing = (dateStr: string) => {
     const d = new Date(dateStr);
     const m = d.getMonth() + 1;
@@ -55,7 +128,7 @@ export default function Reservas() {
       return { price: 650, minStay: 4 }; // Julho
     }
     if (m === 8) {
-      return { price: 700, minStay: 5 }; // Agosto (Mínimo 5 noites)
+      return { price: 700, minStay: 5 }; // Agosto
     }
     if (m === 9) {
       return { price: 600, minStay: 2 }; // Setembro
@@ -104,7 +177,6 @@ export default function Reservas() {
     setIsSubmitting(true);
     setStatus({ type: null, text: "" });
 
-    // Correção: Obter o formulário diretamente a partir do botão clicado
     const form = e.currentTarget.form;
     if (!form) {
       setStatus({ type: "error", text: "Erro ao processar o formulário. Tente novamente." });
@@ -142,8 +214,8 @@ export default function Reservas() {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      booking_type: bookingType,
-      language: formData.get("language") as string,
+      booking_type: bookingType, // Resgatado do state e colocado via hidden input
+      language: language,        // Resgatado do state e colocado via hidden input
       check_in: checkIn || null,
       check_out: checkOut || null,
       guests: guests,
@@ -212,7 +284,7 @@ export default function Reservas() {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         if (diffDays < rule.minStay) {
-          alert(`Para esta data de check-in (${checkIn}), a estadia mínima é de ${rule.minStay} noites.`);
+          alert(`As regras exigem um mínimo de ${rule.minStay} noites para esta data. Modifique o check-out ou escolha outro check-in.`);
           return;
         }
 
@@ -229,7 +301,7 @@ export default function Reservas() {
             Disponibilidade & Tarifas
           </h1>
           <p className="text-stone-500 font-light text-xs sm:text-sm tracking-wide max-w-xl mx-auto">
-            Consulte o calendário em tempo real, calcule o seu orçamento e decida se pretende reservar de imediato ou pedir mais informações.
+            Consulte o calendário em tempo real, simule a sua estadia e faça a sua reserva com total clareza e transparência.
           </p>
         </div>
 
@@ -328,7 +400,7 @@ export default function Reservas() {
           </div>
         </div>
 
-        {/* FORMULÁRIO RESPONSIVO */}
+        {/* FORMULÁRIO RESPONSIVO COM DROPDOWNS CUSTOMIZADOS */}
         <div className="bg-white p-6 sm:p-8 md:p-12 shadow-sm border border-stone-200">
           <form className="space-y-6 sm:space-y-8">
             
@@ -368,24 +440,25 @@ export default function Reservas() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 sm:pb-8 border-b border-stone-100">
-              <div className="md:col-span-2">
-                <label htmlFor="booking_type" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Tipologia de Reserva / Evento *</label>
-                <select 
-                  required 
-                  id="booking_type" 
+              
+              <div className="md:col-span-2 relative z-20">
+                <CustomSelect 
+                  label="Tipologia de Reserva / Evento *"
+                  name="booking_type"
                   value={bookingType}
-                  onChange={(e) => setBookingType(e.target.value)}
-                  className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-stone-700 text-sm sm:text-base rounded-none"
-                >
-                  <option value="Alojamento Exclusivo">Alojamento Exclusivo (Estadia Rural com Preço Automático)</option>
-                  <option value="Evento Corporativo / Team Building">Evento Corporativo / Team Building (Orçamento Sob Consulta)</option>
-                  <option value="Casamento ou Celebração Privada">Casamento ou Celebração Privada (Orçamento Sob Consulta)</option>
-                  <option value="Retiro ou Produção Fotográfica">Retiro ou Produção Fotográfica (Orçamento Sob Consulta)</option>
-                </select>
+                  onChange={setBookingType}
+                  options={[
+                    { value: "Alojamento Exclusivo", label: "Alojamento Exclusivo (Estadia Rural)" },
+                    { value: "Evento Corporativo / Team Building", label: "Evento Corporativo / Team Building" },
+                    { value: "Casamento ou Celebração Privada", label: "Casamento ou Celebração Privada" },
+                    { value: "Retiro ou Produção Fotográfica", label: "Retiro ou Produção Fotográfica" }
+                  ]}
+                />
               </div>
 
+              {/* Caixa de Resumo de Preço Dinâmico (Z-index menor para não sobrepor o dropdown) */}
               {bookingType === "Alojamento Exclusivo" && checkIn && checkOut && checkIn < checkOut && (
-                <div className="md:col-span-2 bg-stone-50 p-5 sm:p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="md:col-span-2 bg-stone-50 p-5 sm:p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-0">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-stone-500 mb-1">Resumo da Estadia</p>
                     <p className="text-sm font-medium text-[#112535]">
@@ -404,26 +477,33 @@ export default function Reservas() {
                 </div>
               )}
 
-              <div>
+              <div className="relative z-0">
                 <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Nome Completo *</label>
                 <input required type="text" id="name" name="name" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
-              <div>
+              <div className="relative z-0">
                 <label htmlFor="email" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Email *</label>
                 <input required type="email" id="email" name="email" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
-              <div>
+              <div className="relative z-0">
                 <label htmlFor="phone" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Telemóvel *</label>
                 <input required type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] text-sm sm:text-base rounded-none" />
               </div>
-              <div>
-                <label htmlFor="language" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Idioma / Language *</label>
-                <select required id="language" name="language" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] bg-white text-sm sm:text-base rounded-none">
-                  <option value="pt">Português (PT)</option>
-                  <option value="en">English (EN)</option>
-                </select>
+              
+              <div className="relative z-10">
+                <CustomSelect 
+                  label="Idioma / Language *"
+                  name="language"
+                  value={language}
+                  onChange={setLanguage}
+                  options={[
+                    { value: "pt", label: "Português (PT)" },
+                    { value: "en", label: "English (EN)" }
+                  ]}
+                />
               </div>
-              <div className="md:col-span-2">
+
+              <div className="md:col-span-2 relative z-0">
                 <label htmlFor="notes" className="block text-xs uppercase tracking-widest font-medium text-[#112535] mb-2">Detalhes e Pedidos Especiais</label>
                 <textarea id="notes" name="notes" rows={4} placeholder="Indique eventuais pedidos especiais..." className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#112535] resize-none text-sm sm:text-base rounded-none"></textarea>
               </div>
