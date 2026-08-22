@@ -214,8 +214,8 @@ export default function Reservas() {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      booking_type: bookingType, // Resgatado do state e colocado via hidden input
-      language: language,        // Resgatado do state e colocado via hidden input
+      booking_type: bookingType,
+      language: language,
       check_in: checkIn || null,
       check_out: checkOut || null,
       guests: guests,
@@ -388,11 +388,11 @@ export default function Reservas() {
                   type="button"
                   disabled={isPast || isOccupied}
                   onClick={() => handleDateClick(dateStr)}
-                  className={`h-12 sm:h-16 md:h-20 border flex flex-col items-center justify-between p-1.5 sm:p-2 text-xs transition-all ${bgColor}`}
+                  className={`h-12 sm:h-16 md:h-20 border flex flex-col items-center justify-center sm:justify-between p-1 sm:p-2 text-xs transition-all ${bgColor}`}
                 >
                   <span className="font-medium text-xs sm:text-sm">{dayNum}</span>
                   {!isPast && !isOccupied && (
-                    <span className="text-[8px] sm:text-[9px] opacity-70 hidden xs:block">{dayRate.price}€</span>
+                    <span className="text-[8px] sm:text-[10px] opacity-75 mt-auto block">{dayRate.price}€</span>
                   )}
                 </button>
               );
@@ -456,7 +456,7 @@ export default function Reservas() {
                 />
               </div>
 
-              {/* Caixa de Resumo de Preço Dinâmico (Z-index menor para não sobrepor o dropdown) */}
+              {/* Caixa de Resumo de Preço Dinâmico */}
               {bookingType === "Alojamento Exclusivo" && checkIn && checkOut && checkIn < checkOut && (
                 <div className="md:col-span-2 bg-stone-50 p-5 sm:p-6 border border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-0">
                   <div>
