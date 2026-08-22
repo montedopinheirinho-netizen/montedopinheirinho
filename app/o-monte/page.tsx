@@ -113,8 +113,8 @@ export default function OMonte() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
             <img src="/galeria-1.JPG" alt="Galeria 1" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
-            <img src="/galeria-2.jpg" alt="Galeria 2" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
-            <img src="/galeria-3.jpg" alt="Galeria 3" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-2.JPG" alt="Galeria 2" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
+            <img src="/galeria-3.JPG" alt="Galeria 3" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
             <img src="/galeria-4.JPG" alt="Galeria 4" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
             <img src="/galeria-5.jpeg" alt="Galeria 5" className="w-full h-48 md:h-56 object-cover border border-stone-200" />
             
