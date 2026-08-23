@@ -31,7 +31,7 @@ export default function Regiao() {
             </h2>
             <div className="space-y-4 text-stone-500 font-light text-sm leading-relaxed mb-8">
               <p>
-                <strong>Caminhos de Santiago (Rota Vicentina):</strong> Mesmos na extrema do nosso Monte passam trilhos míticos. É o cenário idílico para longas caminhadas matinais, explorar a região de bicicleta (BTT) ou para o seu jogging diário imerso na natureza.
+                <strong>Caminhos de Santiago (Rota Vicentina):</strong> Mesmo na extrema do nosso Monte passam trilhos míticos. É o cenário idílico para longas caminhadas matinais, explorar a região de bicicleta (BTT) ou para o seu jogging diário imerso na natureza.
               </p>
               <p>
                 <strong>Refúgios de Água Doce:</strong> A escassos 2km de distância, poderá explorar a <strong>Barragem de Fonte Serne</strong>, e um pouco mais à frente a famosa <strong>Barragem de Campilhas</strong>. Espelhos de água perfeitos para piqueniques, pesca desportiva e contemplação absoluta.
@@ -47,7 +47,15 @@ export default function Regiao() {
                 rel="noreferrer"
                 className="inline-block text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-6 py-3 text-[#084063] hover:bg-[#084063] hover:text-white transition-colors"
               >
-                Direções: Barragem
+                Direções: Campilhas
+              </a>
+              <a 
+                href={`https://www.google.com/maps/dir/${originCoords}/Barragem+de+Fonte+Serne`}
+                target="_blank" 
+                rel="noreferrer"
+                className="inline-block text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-6 py-3 text-[#084063] hover:bg-[#084063] hover:text-white transition-colors"
+              >
+                Direções: Fonte Serne
               </a>
               <a 
                 href={`https://www.google.com/maps/dir/${originCoords}/S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`}
@@ -60,7 +68,8 @@ export default function Regiao() {
             </div>
           </div>
           <div className="h-64 md:h-[450px] w-full relative order-first md:order-last border border-stone-200 shadow-sm">
-            <img src="/foto-barragem.jpg" alt="Barragem e Trilhos no Alentejo" className="w-full h-full object-cover" />
+            {/* Link direto para imagem profissional de Natureza/Lago */}
+            <img src="https://images.unsplash.com/photo-1543880928-18e3852261ea?auto=format&fit=crop&q=80&w=2000" alt="Barragem e Trilhos no Alentejo" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
@@ -69,7 +78,8 @@ export default function Regiao() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           <div className="h-64 md:h-[450px] w-full relative border border-stone-200 shadow-sm">
-            <img src="/foto-santiago.jpg" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
+             {/* Link direto para imagem profissional de Castelo/Vila Histórica */}
+            <img src="https://images.unsplash.com/photo-1627885449599-4c125df1c9d2?auto=format&fit=crop&q=80&w=2000" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
           </div>
           <div>
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4 block">História e Conveniência (15 min)</span>
@@ -116,7 +126,8 @@ export default function Regiao() {
             {/* CARD: PORTO COVO */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/foto-portocovo.jpg" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                 {/* Imagem Externa: Falésias / Oceano */}
+                <img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?auto=format&fit=crop&q=80&w=2000" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Porto Covo</h3>
@@ -138,13 +149,14 @@ export default function Regiao() {
             {/* CARD: MILFONTES */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/foto-milfontes.jpg" alt="Vila Nova de Milfontes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                 {/* Imagem Externa: Foz do Rio / Praia */}
+                <img src="https://images.unsplash.com/photo-1616421946050-84b2c1f46d9b?auto=format&fit=crop&q=80&w=2000" alt="Vila Nova de Milfontes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">V. N. de Milfontes</h3>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">A 25 Minutos</span>
                 <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
-                  A "Princesa do Alentejo", famosa pelo encontro sereno entre o <strong>Rio Mira</strong> e o oceano. Ideal para desportos náuticos e praias fluviais com crianças. Obrigatório saborear a gastronomia local em restaurantes de renome como a incontornável <a href="https://www.tascadocelso.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-[#084063] font-medium text-[#084063]">Tasca do Celso</a>.
+                  A "Princesa do Alentejo", famosa pelo encontro sereno entre o <strong>Rio Mira</strong> e o oceano. Ideal para desportos náuticos e praias fluviais com crianças. Obrigatório saborear a gastronomia local em restaurantes de renome como a incontornável <a href="https://tascadocelso.pt/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-[#084063] font-medium text-[#084063]">Tasca do Celso</a>.
                 </p>
                 <a 
                   href={`https://www.google.com/maps/dir/${originCoords}/Vila+Nova+de+Milfontes`}
@@ -160,7 +172,8 @@ export default function Regiao() {
             {/* CARD: SINES */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/foto-sines.jpg" alt="Baía de Sines" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                {/* Imagem Externa: Barcos / Baía */}
+                <img src="https://images.unsplash.com/photo-1520177242131-41ee3c33dcba?auto=format&fit=crop&q=80&w=2000" alt="Baía de Sines" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Sines</h3>
@@ -212,7 +225,7 @@ export default function Regiao() {
                   Visitar Loja do Parceiro
                 </a>
                 <a 
-                  href={`https://www.google.com/maps/dir/${originCoords}/Pecados+do+Alentejo`}
+                  href={`https://www.google.com/maps/dir/${originCoords}/Pecados+do+Alentejo,+S%C3%A3o+Domingos`}
                   target="_blank" 
                   rel="noreferrer"
                   className="text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-8 py-4 bg-[#084063] text-white hover:opacity-90 transition-opacity"
