@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../lib/supabase";
+import Link from "next/link";
 
 // --- Componente de Dropdown Personalizado ---
 interface Option {
@@ -187,7 +188,7 @@ export default function Reservas() {
     const formData = new FormData(form);
     
     if (!formData.get("rgpd")) {
-      setStatus({ type: "error", text: "Por favor, aceite a política de privacidade para continuar." });
+      setStatus({ type: "error", text: "Por favor, aceite os Termos e a Política de Privacidade para continuar." });
       setIsSubmitting(false);
       return;
     }
@@ -512,7 +513,7 @@ export default function Reservas() {
             <div className="flex items-start gap-3">
               <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#084063] focus:ring-[#084063]" />
               <label htmlFor="rgpd" className="text-xs sm:text-sm font-light text-stone-500 leading-relaxed">
-                Autorizo a recolha e o tratamento dos meus dados pessoais pelo Monte do Pinheirinho, exclusivamente para efeitos de gestão da reserva ou evento, de acordo com o RGPD.
+                Li e aceito os <Link href="/termos" className="underline hover:text-[#084063] transition-colors">Termos e Condições</Link> e a <Link href="/privacidade" className="underline hover:text-[#084063] transition-colors">Política de Privacidade</Link>, e autorizo o tratamento dos meus dados para efeitos de gestão da reserva.
               </label>
             </div>
 
