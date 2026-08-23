@@ -4,19 +4,25 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full bg-white text-[#084063]">
       
-      {/* 1. HERO SECTION MINIMALISTA COM CTA */}
-      <section className="relative h-screen w-full flex items-end pb-24 justify-center">
+      {/* 1. HERO SECTION MINIMALISTA COM CTA E LOGÓTIPO */}
+      <section className="relative h-screen w-full flex items-center justify-center pt-16">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{ backgroundImage: "url('/foto-hero.png')", backgroundColor: "#084063" }} 
         />
-        <div className="absolute inset-0 bg-black/30 z-10" />
+        <div className="absolute inset-0 bg-black/40 z-10" />
 
-        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto">
+        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto flex flex-col items-center mt-12">
+          {/* O Logótipo em destaque na entrada */}
+          <img 
+            src="/logo-official.png" 
+            alt="Monte do Pinheirinho" 
+            className="w-28 h-28 md:w-36 md:h-36 object-contain mb-8 opacity-90 drop-shadow-lg" 
+          />
           <h1 className="text-3xl md:text-5xl text-white font-light tracking-[0.3em] uppercase drop-shadow-md mb-6">
             O Seu Refúgio Exclusivo
           </h1>
-          <p className="text-white/80 font-light text-xs md:text-sm tracking-widest uppercase mb-8">
+          <p className="text-white/80 font-light text-xs md:text-sm tracking-widest uppercase mb-10">
             Santiago do Cacém · Alentejo · Portugal
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">

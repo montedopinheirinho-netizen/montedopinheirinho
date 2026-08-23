@@ -13,16 +13,15 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#084063] shadow-md py-4" : "bg-[#084063] py-6"}`}>
+    <header className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#084063] shadow-md py-3" : "bg-[#084063] py-5"}`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
-        {/* Logotipo e Nome Oficial */}
-        <Link href="/" className="flex items-center gap-4">
-          <div className="w-10 h-10 md:w-16 md:h-12 relative flex-shrink-0">
-            {/* mix-blend-screen REMOVIDO PARA MANTER A COR ORIGINAL DO LOGO */}
+        {/* Logotipo e Nome Oficial - REDUZIDOS */}
+        <Link href="/" className="flex items-center gap-3">
+          <div className="w-8 h-8 md:w-10 md:h-10 relative flex-shrink-0">
             <img src="/logo-official.png" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain" />
           </div>
-          <span className="text-base md:text-xl font-light tracking-widest uppercase text-white">
+          <span className="text-sm md:text-lg font-light tracking-widest uppercase text-white">
             Monte do Pinheirinho
           </span>
         </Link>
