@@ -36,9 +36,6 @@ export default function Regiao() {
               <p>
                 <strong>Refúgios de Água Doce:</strong> A escassos 2km de distância, poderá explorar a <strong>Barragem de Fonte Serne</strong>, e um pouco mais à frente a famosa <strong>Barragem de Campilhas</strong>. Espelhos de água perfeitos para piqueniques, pesca desportiva e contemplação absoluta.
               </p>
-              <p>
-                <strong>Aldeia de São Domingos:</strong> A 4km encontra o coração da comunidade local, com mini-mercado, pão quente alentejano e restaurantes típicos para uma refeição autêntica e descomplicada.
-              </p>
             </div>
             <div className="flex flex-wrap gap-4">
               <a 
@@ -56,14 +53,6 @@ export default function Regiao() {
                 className="inline-block text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-6 py-3 text-[#084063] hover:bg-[#084063] hover:text-white transition-colors"
               >
                 Direções: Fonte Serne
-              </a>
-              <a 
-                href={`https://www.google.com/maps/dir/${originCoords}/S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`}
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-block text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-6 py-3 text-[#084063] hover:bg-[#084063] hover:text-white transition-colors"
-              >
-                Direções: São Domingos
               </a>
             </div>
           </div>
@@ -89,7 +78,7 @@ export default function Regiao() {
                 Dominada pelo seu imponente <strong>Castelo Medieval e Igreja Matriz</strong>, que se erguem no topo da colina com vista até ao mar, Santiago do Cacém é a fusão perfeita entre a riqueza histórica e a conveniência urbana.
               </p>
               <p>
-                Sugerimos uma visita às impressionantes <strong>Ruínas Romanas de Miróbriga</strong>. A cidade oferece ainda todos os serviços modernos de que possa precisar durante a sua estadia: grandes supermercados, farmácias, e variadas opções de restauração que honram a gastronomia local.
+                Sugerimos uma visita às impressionantes <strong>Ruínas Romanas de Miróbriga</strong>. A cidade oferece ainda todos os serviços modernos de que possa precisar durante a sua estadia: grandes supermercados e farmácias.
               </p>
             </div>
             <a 
@@ -109,13 +98,13 @@ export default function Regiao() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-stone-400 font-medium mb-4 block">
-              Mar e Gastronomia
+              Mar e Paisagens
             </span>
             <h2 className="text-3xl md:text-4xl font-light uppercase tracking-widest mb-6 text-[#084063]">
               A Costa Vicentina
             </h2>
             <p className="text-stone-500 font-light text-sm md:text-base">
-              Passeios de barco, marisco fresco e areais a perder de vista. O Atlântico chama por si a uma curta viagem de carro.
+              Passeios de barco e areais a perder de vista. O Atlântico selvagem aguarda por si a uma curta e deslumbrante viagem de carro.
             </p>
           </div>
 
@@ -130,7 +119,7 @@ export default function Regiao() {
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Porto Covo</h3>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">A 20 Minutos</span>
                 <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
-                  Passeie pela icónica Praça Marquês de Pombal. Relaxe nos areais resguardados da <strong>Praia dos Buizinhos</strong> ou da <strong>Praia Grande</strong>, e não perca a vista lendária para a mítica <strong>Ilha do Pessegueiro</strong>. O paraíso para quem procura robalos e percebes frescos.
+                  Passeie pela icónica Praça Marquês de Pombal. Relaxe nos areais resguardados da <strong>Praia dos Buizinhos</strong> ou da <strong>Praia Grande</strong>, e não perca a vista lendária para a mítica <strong>Ilha do Pessegueiro</strong>.
                 </p>
                 <a 
                   href={`https://www.google.com/maps/dir/${originCoords}/Porto+Covo`}
@@ -152,7 +141,7 @@ export default function Regiao() {
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">V. N. de Milfontes</h3>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">A 25 Minutos</span>
                 <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
-                  A "Princesa do Alentejo", famosa pelo encontro sereno entre o <strong>Rio Mira</strong> e o oceano. Ideal para desportos náuticos e praias fluviais com crianças. Obrigatório saborear a gastronomia local em restaurantes de renome como a incontornável <a href="https://tascadocelso.pt/" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-[#084063] font-medium text-[#084063]">Tasca do Celso</a>.
+                  A "Princesa do Alentejo", famosa pelo encontro sereno entre o <strong>Rio Mira</strong> e o oceano. É o local ideal para desportos náuticos, caminhadas nas dunas e aproveitar praias fluviais com as crianças.
                 </p>
                 <a 
                   href={`https://www.google.com/maps/dir/${originCoords}/Vila+Nova+de+Milfontes`}
@@ -174,7 +163,7 @@ export default function Regiao() {
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Sines</h3>
                 <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">A 30 Minutos</span>
                 <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
-                  O berço de Vasco da Gama. Esconde um centro histórico debruçado sobre a baía e o porto de abrigo, praias como a de São Torpes (excelente para surf) e é o palco principal do famoso Festival Músicas do Mundo (FMM).
+                  O berço de Vasco da Gama. Esconde um centro histórico debruçado sobre a baía e o porto de abrigo, e praias famosas pelo surf como a de <strong>São Torpes</strong>. A marginal ao pôr do sol é obrigatória.
                 </p>
                 <a 
                   href={`https://www.google.com/maps/dir/${originCoords}/Sines`}
@@ -191,24 +180,153 @@ export default function Regiao() {
         </div>
       </section>
 
-      {/* 5. PARCEIROS E PRODUTOS LOCAIS */}
-      <section className="py-24 px-6 bg-white border-t border-stone-200">
+      {/* 5. GASTRONOMIA E RESTAURANTES */}
+      <section className="bg-white border-t border-stone-200 py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-stone-400 font-medium mb-4 block">
+              Sabores da Região
+            </span>
+            <h2 className="text-3xl md:text-4xl font-light uppercase tracking-widest mb-6 text-[#084063]">
+              Onde Comer
+            </h2>
+            <p className="text-stone-500 font-light text-sm md:text-base">
+              Selecionámos os restaurantes que representam o melhor da gastronomia alentejana, do marisco fresco da costa às tradicionais migas do interior.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            {/* Restaurante 1 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-celso.jpg" alt="Tasca do Celso" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">A Tasca do Celso</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">V. N. de Milfontes</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  Uma instituição na região. Ambiente rústico e acolhedor, onde as carnes e o marisco são tratados com mestria. É fundamental reservar mesa.
+                </p>
+                <div className="flex flex-col gap-2 mt-auto">
+                  <a href="https://tascadocelso.pt/" target="_blank" rel="noreferrer" className="text-center border border-[#084063] text-[#084063] py-2 text-xs uppercase tracking-widest hover:bg-[#084063] hover:text-white transition-colors">Visitar Site</a>
+                  <a href={`https://www.google.com/maps/dir/${originCoords}/Tasca+do+Celso,+Vila+Nova+de+Milfontes`} target="_blank" rel="noreferrer" className="text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+                </div>
+              </div>
+            </div>
+
+            {/* Restaurante 2 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-mercado.jpg" alt="Mercado à Mesa" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">Mercado à Mesa</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">Santiago do Cacém</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  Sabores tradicionais recriados com excelência. Localizado em Santiago do Cacém, é uma das melhores opções de cidade para provar iguarias regionais.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/Mercado+%C3%A0+Mesa,+Santiago+do+Cac%C3%A9m`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+              </div>
+            </div>
+
+            {/* Restaurante 3 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-miramar.jpg" alt="Miramar" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">Miramar</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">Porto Covo</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  Peixe fresco grelhado no carvão com a maresia como companhia. A escolha certa para uma refeição autêntica após uma manhã de praia.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/Restaurante+Miramar,+Porto+Covo`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+              </div>
+            </div>
+
+            {/* Restaurante 4 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-pescador.jpg" alt="O Pescador" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">O Pescador</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">V. N. de Milfontes</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  Especializado nos sabores do mar, oferece mariscos e peixes de extrema qualidade num ambiente tradicional na costa alentejana.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/O+Pescador,+Vila+Nova+de+Milfontes`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+              </div>
+            </div>
+
+            {/* Restaurante 5 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-bellavita.jpg" alt="La Bella Vita" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">La Bella Vita</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">Porto Covo</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  Para os dias em que apetece variar da gastronomia portuguesa, este restaurante apresenta uma influência italiana requintada e vistas maravilhosas.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/La+Bella+Vita,+Porto+Covo`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+              </div>
+            </div>
+
+            {/* Restaurante 6 */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-ventura.jpg" alt="Café Ventura" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">Café Ventura</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">São Domingos (A 5 minutos)</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  A nossa tasca típica recomendada. Fica na aldeia vizinha e serve petiscos e refeições simples, caseiras e genuinamente deliciosas. Perfeito para almoços descontraídos.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/Cafe+Ventura,+S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+              </div>
+            </div>
+
+            {/* Restaurante 7 - A Paragem */}
+            <div className="border border-stone-200 shadow-sm flex flex-col group">
+              <div className="h-40 overflow-hidden relative">
+                <img src="/foto-paragem.jpg" alt="A Paragem" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col flex-grow bg-stone-50">
+                <h3 className="text-lg font-medium uppercase tracking-widest mb-1 text-[#084063]">A Paragem</h3>
+                <span className="text-[10px] uppercase tracking-widest text-stone-400 mb-4 block">Foros da Casa Nova</span>
+                <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
+                  A escolha brilhante para <strong>Take-Away</strong> para comer no Monte. Preparam migas deliciosas, lagartos, carne de porco alentejana e bochechas irrepreensíveis.
+                </p>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/A+Paragem,+Foros+da+Casa+Nova`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções (Ideal para Take-Away)</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 6. PARCEIROS LOCAIS */}
+      <section className="py-24 px-6 bg-stone-50 border-t border-stone-200">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-2xl font-light uppercase tracking-widest mb-4">A Nossa Parceria de Excelência</h2>
             <p className="text-stone-500 font-light max-w-2xl mx-auto text-sm md:text-base">
-              Valorizamos a produção sustentável e o comércio local. Por isso, criámos ligações estratégicas para lhe oferecer os verdadeiros sabores do Alentejo.
+              Para além dos restaurantes, valorizamos a produção sustentável e os comerciantes locais.
             </p>
           </div>
           
-          <div className="border border-stone-200 bg-stone-50 p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
-            <div className="w-full md:w-1/3 h-48 bg-white flex items-center justify-center p-6 border border-stone-200 shadow-sm">
+          <div className="border border-stone-200 bg-white p-8 md:p-12 flex flex-col md:flex-row items-center gap-12 shadow-sm">
+            <div className="w-full md:w-1/3 h-48 bg-stone-50 flex items-center justify-center p-6 border border-stone-200">
               <img src="/logo-pecados.png" alt="Logótipo Pecados do Alentejo" className="w-full h-full object-contain" />
             </div>
             <div className="w-full md:w-2/3 flex flex-col">
               <h3 className="text-xl font-medium uppercase tracking-widest mb-4 text-[#084063]">Pecados do Alentejo</h3>
               <p className="text-stone-500 font-light text-sm md:text-base leading-relaxed mb-6">
-                Uma marca dedicada exclusivamente aos produtos gourmet regionais, celebrando as receitas, os vinhos, os queijos e os doces únicos da nossa região. Durante a sua estadia no Monte do Pinheirinho, tem a comodidade de encomendar estes produtos online e levantá-los na loja da aldeia de São Domingos, a 5 minutos da sua porta.
+                Uma marca dedicada aos produtos gourmet, celebrando as receitas, os vinhos, os queijos e os doces únicos do Alentejo. Durante a sua estadia, tem a comodidade de encomendar estes produtos e levantá-los na loja na aldeia de São Domingos, a 5 minutos da sua porta.
               </p>
               <div className="flex flex-wrap gap-4">
                 <a 
@@ -220,7 +338,7 @@ export default function Regiao() {
                   Visitar Loja do Parceiro
                 </a>
                 <a 
-                  href={`https://www.google.com/maps/dir/${originCoords}/S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`}
+                  href={`https://www.google.com/maps/dir/${originCoords}/Pecados+do+Alentejo,+S%C3%A3o+Domingos`}
                   target="_blank" 
                   rel="noreferrer"
                   className="text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-8 py-4 bg-[#084063] text-white hover:opacity-90 transition-opacity"
