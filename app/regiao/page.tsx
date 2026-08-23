@@ -68,8 +68,7 @@ export default function Regiao() {
             </div>
           </div>
           <div className="h-64 md:h-[450px] w-full relative order-first md:order-last border border-stone-200 shadow-sm">
-            {/* Link direto para imagem profissional de Natureza/Lago */}
-            <img src="https://images.unsplash.com/photo-1543880928-18e3852261ea?auto=format&fit=crop&q=80&w=2000" alt="Barragem e Trilhos no Alentejo" className="w-full h-full object-cover" />
+            <img src="/foto-barragem.jpg" alt="Barragem e Trilhos no Alentejo" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
@@ -78,8 +77,7 @@ export default function Regiao() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           <div className="h-64 md:h-[450px] w-full relative border border-stone-200 shadow-sm">
-             {/* Link direto para imagem profissional de Castelo/Vila Histórica */}
-            <img src="https://images.unsplash.com/photo-1627885449599-4c125df1c9d2?auto=format&fit=crop&q=80&w=2000" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
+            <img src="/foto-santiago.jpg" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
           </div>
           <div>
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4 block">História e Conveniência (15 min)</span>
@@ -126,8 +124,7 @@ export default function Regiao() {
             {/* CARD: PORTO COVO */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                 {/* Imagem Externa: Falésias / Oceano */}
-                <img src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?auto=format&fit=crop&q=80&w=2000" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/foto-portocovo.jpg" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Porto Covo</h3>
@@ -149,8 +146,7 @@ export default function Regiao() {
             {/* CARD: MILFONTES */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                 {/* Imagem Externa: Foz do Rio / Praia */}
-                <img src="https://images.unsplash.com/photo-1616421946050-84b2c1f46d9b?auto=format&fit=crop&q=80&w=2000" alt="Vila Nova de Milfontes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/foto-milfontes.jpg" alt="Vila Nova de Milfontes" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">V. N. de Milfontes</h3>
@@ -172,8 +168,7 @@ export default function Regiao() {
             {/* CARD: SINES */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                {/* Imagem Externa: Barcos / Baía */}
-                <img src="https://images.unsplash.com/photo-1520177242131-41ee3c33dcba?auto=format&fit=crop&q=80&w=2000" alt="Baía de Sines" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/foto-sines.webp" alt="Baía de Sines" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Sines</h3>
@@ -225,7 +220,7 @@ export default function Regiao() {
                   Visitar Loja do Parceiro
                 </a>
                 <a 
-                  href={`https://www.google.com/maps/dir/${originCoords}/Pecados+do+Alentejo,+S%C3%A3o+Domingos`}
+                  href={`https://www.google.com/maps/dir/${originCoords}/S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`}
                   target="_blank" 
                   rel="noreferrer"
                   className="text-[10px] sm:text-xs uppercase tracking-widest font-medium border border-[#084063] px-8 py-4 bg-[#084063] text-white hover:opacity-90 transition-opacity"
