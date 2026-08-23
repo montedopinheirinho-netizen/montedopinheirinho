@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full bg-white text-[#084063]">
       
-      {/* 1. HERO SECTION MINIMALISTA COM CTA E LOGÓTIPO */}
+      {/* 1. HERO SECTION APENAS COM TEXTO */}
       <section className="relative h-screen w-full flex items-center justify-center pt-16">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -12,24 +12,28 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/40 z-10" />
 
-        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto flex flex-col items-center mt-12">
-          {/* O Logótipo em destaque na entrada */}
-          <img 
-            src="/logo-official.png" 
-            alt="Monte do Pinheirinho" 
-            className="w-28 h-28 md:w-36 md:h-36 object-contain mb-8 opacity-90 drop-shadow-lg" 
-          />
-          <h1 className="text-3xl md:text-5xl text-white font-light tracking-[0.3em] uppercase drop-shadow-md mb-6">
-            O Seu Refúgio Exclusivo
+        <div className="relative z-20 text-center px-4 sm:px-6 max-w-5xl mx-auto flex flex-col items-center mt-12">
+          
+          {/* Nome da Propriedade em Texto Grande e Elegante (Sem imagem do logo) */}
+          <h1 className="text-3xl sm:text-5xl md:text-7xl text-white font-light tracking-[0.2em] uppercase drop-shadow-lg mb-6 leading-tight">
+            Monte do Pinheirinho
           </h1>
-          <p className="text-white/80 font-light text-xs md:text-sm tracking-widest uppercase mb-10">
+          
+          <div className="w-16 h-[1px] bg-white/60 mb-6"></div>
+          
+          <h2 className="text-base md:text-xl text-white/90 font-light tracking-[0.3em] uppercase drop-shadow-md mb-8">
+            O Seu Refúgio Exclusivo
+          </h2>
+          
+          <p className="text-white/70 font-light text-[10px] md:text-xs tracking-widest uppercase mb-12">
             Santiago do Cacém · Alentejo · Portugal
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/reservas" className="px-8 py-4 bg-white text-[#084063] text-xs font-medium tracking-[0.2em] uppercase hover:bg-stone-100 transition-colors">
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-4 w-full sm:w-auto">
+            <Link href="/reservas" className="w-full sm:w-auto px-10 py-4 bg-white text-[#084063] text-xs font-medium tracking-[0.2em] uppercase hover:bg-stone-100 transition-colors">
               Reservar Estadia
             </Link>
-            <Link href="/contactos" className="px-8 py-4 border border-white text-white text-xs font-medium tracking-[0.2em] uppercase hover:bg-white/10 transition-colors">
+            <Link href="/contactos" className="w-full sm:w-auto px-10 py-4 border border-white text-white text-xs font-medium tracking-[0.2em] uppercase hover:bg-white/10 transition-colors">
               Pedir Orçamento para Evento
             </Link>
           </div>

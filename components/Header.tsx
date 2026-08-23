@@ -16,14 +16,11 @@ export default function Header() {
     <header className={`w-full fixed top-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#084063] shadow-md py-3" : "bg-[#084063] py-5"}`}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
-        {/* Logotipo e Nome Oficial - REDUZIDOS */}
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 md:w-10 md:h-10 relative flex-shrink-0">
+        {/* Logótipo APENAS EM IMAGEM */}
+        <Link href="/" className="flex items-center">
+          <div className="w-12 h-12 md:w-16 md:h-14 relative flex-shrink-0">
             <img src="/logo-official.png" alt="Logotipo Monte do Pinheirinho" className="w-full h-full object-contain" />
           </div>
-          <span className="text-sm md:text-lg font-light tracking-widest uppercase text-white">
-            Monte do Pinheirinho
-          </span>
         </Link>
         
         {/* Navegação Desktop */}
