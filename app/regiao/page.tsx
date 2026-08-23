@@ -113,7 +113,7 @@ export default function Regiao() {
             {/* CARD: PORTO COVO */}
             <div className="bg-white border border-stone-200 shadow-sm flex flex-col h-full group">
               <div className="h-48 overflow-hidden relative">
-                <img src="/foto-portocovo.jpg" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/foto-porto-covo.jpg" alt="Ilha do Pessegueiro e Porto Covo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-xl font-medium uppercase tracking-widest mb-2 text-[#084063]">Porto Covo</h3>
@@ -286,7 +286,7 @@ export default function Regiao() {
                 <p className="text-stone-500 font-light text-sm leading-relaxed mb-6 flex-grow">
                   A nossa tasca típica recomendada. Fica na aldeia vizinha e serve petiscos e refeições simples, caseiras e genuinamente deliciosas. Perfeito para almoços descontraídos.
                 </p>
-                <a href={`https://www.google.com/maps/dir/${originCoords}/Cafe+Ventura,+S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções</a>
+                <a href={`https://www.google.com/maps/dir/${originCoords}/Cafe+Ventura,+S%C3%A3o+Domingos,+Santiago+do+Cac%C3%A9m`} target="_blank" rel="noreferrer" className="mt-auto text-center bg-[#084063] text-white py-2 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">Direções (Ideal para Take-Away)</a>
               </div>
             </div>
 
