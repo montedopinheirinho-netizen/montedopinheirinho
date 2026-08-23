@@ -66,7 +66,7 @@ export default function Regiao() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           <div className="h-64 md:h-[450px] w-full relative border border-stone-200 shadow-sm">
-            <img src="/foto-santiago.jpg" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
+            <img src="/foto-santiago-cacem.jpg" alt="Castelo de Santiago do Cacém" className="w-full h-full object-cover" />
           </div>
           <div>
             <span className="text-[10px] md:text-xs uppercase tracking-widest text-stone-400 font-medium mb-4 block">História e Conveniência (15 min)</span>
