@@ -14,6 +14,37 @@ export default function Contactos() {
 
     const formData = new FormData(e.currentTarget);
     
+    // 1. O TIPO DE DEFESA HONEYPOT: Se o campo oculto for preenchido, é um bot.
+    const honeypot = formData.get("website");
+    if (honeypot) {
+      // Simula sucesso para enganar o bot e fazê-lo ir embora
+      setStatusMessage({ type: "success", text: "Mensagem enviada com sucesso. Verifique o seu email e entraremos em contacto brevemente." });
+      (e.target as HTMLFormElement).reset();
+      setIsSubmitting(false);
+      return;
+    }
+
+    const name = formData.get("name") as string;
+    const message = formData.get("message") as string;
+    const guests = parseInt(formData.get("guests") as string) || 0;
+
+    // 2. VALIDAÇÃO LÓGICA RESTRITA (Lotação e Padrões de Bot)
+    if (guests > 12) {
+      setStatusMessage({ type: "error", text: "A capacidade máxima da propriedade é de 12 hóspedes. Para eventos de maior dimensão, por favor especifique na mensagem com hóspedes definidos a 12." });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Se o nome ou a mensagem tiverem palavras enormes sem espaços, é spam provado.
+    const isGibberish = (text: string) => text.length > 15 && !text.includes(" ");
+    if (isGibberish(name) || isGibberish(message)) {
+       // Simula sucesso para despistar o bot
+      setStatusMessage({ type: "success", text: "Mensagem enviada com sucesso. Verifique o seu email e entraremos em contacto brevemente." });
+      (e.target as HTMLFormElement).reset();
+      setIsSubmitting(false);
+      return;
+    }
+
     // Validação RGPD
     if (!formData.get("rgpd")) {
       setStatusMessage({ type: "error", text: "Por favor, aceite a política de privacidade para continuar." });
@@ -22,14 +53,14 @@ export default function Contactos() {
     }
 
     const contactData = {
-      name: formData.get("name") as string,
+      name: name,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
-      guests: parseInt(formData.get("guests") as string) || 0,
-      message: formData.get("message") as string,
+      guests: guests,
+      message: message,
     };
 
-    // 1. Inserir na tabela do Supabase
+    // Inserir na tabela do Supabase
     const { error } = await supabase.from("contacts").insert([contactData]);
 
     if (error) {
@@ -38,7 +69,7 @@ export default function Contactos() {
       return;
     }
 
-    // 2. Disparar emails via API do Resend
+    // Disparar emails via API do Resend
     try {
       await fetch('/api/send-contact', {
         method: 'POST',
@@ -102,9 +133,16 @@ export default function Contactos() {
         </div>
 
         {/* Formulário */}
-        <div className="bg-stone-50 p-8 md:p-12 border border-stone-200 flex flex-col justify-center">
+        <div className="bg-stone-50 p-8 md:p-12 border border-stone-200 flex flex-col justify-center relative">
           <h2 className="text-xl font-light tracking-widest uppercase mb-8">Envie uma Mensagem</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
+            
+            {/* HONEYPOT FIELD - Visivelmente escondido, mas tentador para os bots */}
+            <div className="absolute opacity-0 -z-50 h-0 w-0 overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Nome *</label>
@@ -119,8 +157,8 @@ export default function Contactos() {
                 <input type="tel" id="phone" name="phone" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
               <div>
-                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Hóspedes</label>
-                <input type="number" min="1" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
+                <label htmlFor="guests" className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Hóspedes (Máx 12)</label>
+                <input type="number" min="1" max="12" id="guests" name="guests" className="w-full px-4 py-3 border border-stone-200 focus:outline-none focus:border-[#084063] bg-white transition-colors" />
               </div>
             </div>
             <div>
@@ -130,8 +168,8 @@ export default function Contactos() {
 
             {/* Checkbox RGPD OBRIGATÓRIA */}
             <div className="flex items-start gap-3">
-              <input type="checkbox" id="rgpd-contact" name="rgpd" required className="mt-1 border-stone-300 text-[#084063] focus:ring-[#084063]" />
-              <label htmlFor="rgpd-contact" className="text-xs font-light text-stone-500 leading-relaxed">
+              <input type="checkbox" id="rgpd-contact" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#084063] focus:ring-[#084063]" />
+              <label htmlFor="rgpd-contact" className="text-xs font-light text-stone-500 leading-relaxed mt-0.5">
                 Autorizo o tratamento dos meus dados para efeitos de resposta ao meu pedido de contacto, de acordo com o RGPD.
               </label>
             </div>

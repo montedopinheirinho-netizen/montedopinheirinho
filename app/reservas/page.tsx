@@ -113,7 +113,6 @@ export default function Reservas() {
     fetchBookings();
   }, []);
 
-  // Motor Dinâmico de Preços & Regras
   const getNightPricing = (dateStr: string) => {
     const d = new Date(dateStr);
     const m = d.getMonth() + 1;
@@ -187,6 +186,33 @@ export default function Reservas() {
 
     const formData = new FormData(form);
     
+    // 1. O TIPO DE DEFESA HONEYPOT
+    const honeypot = formData.get("website");
+    if (honeypot) {
+      const successText = actionType === 'reservar' 
+        ? "Reserva iniciada com sucesso! Verifique o seu email para consultar os dados de pagamento (prazo de 24h)." 
+        : "Pedido de informações enviado com sucesso. Entraremos em contacto brevemente.";
+      setStatus({ type: "success", text: successText });
+      form.reset();
+      setIsSubmitting(false);
+      return;
+    }
+
+    const name = formData.get("name") as string;
+    const notes = formData.get("notes") as string;
+
+    // 2. VALIDAÇÃO LÓGICA (Anti-Gibberish Spam)
+    const isGibberish = (text: string) => text && text.length > 15 && !text.includes(" ");
+    if (isGibberish(name) || isGibberish(notes)) {
+      const successText = actionType === 'reservar' 
+        ? "Reserva iniciada com sucesso! Verifique o seu email para consultar os dados de pagamento (prazo de 24h)." 
+        : "Pedido de informações enviado com sucesso. Entraremos em contacto brevemente.";
+      setStatus({ type: "success", text: successText });
+      form.reset();
+      setIsSubmitting(false);
+      return;
+    }
+
     if (!formData.get("rgpd")) {
       setStatus({ type: "error", text: "Por favor, aceite os Termos e a Política de Privacidade para continuar." });
       setIsSubmitting(false);
@@ -212,7 +238,7 @@ export default function Reservas() {
     }
 
     const bookingData = {
-      name: formData.get("name") as string,
+      name: name,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       booking_type: bookingType,
@@ -220,7 +246,7 @@ export default function Reservas() {
       check_in: checkIn || null,
       check_out: checkOut || null,
       guests: guests,
-      notes: formData.get("notes") as string,
+      notes: notes,
       total_price: bookingType === "Alojamento Exclusivo" ? totalPrice : 0,
       action_type: actionType,
       status: actionType === 'reservar' ? 'pendente_pagamento' : 'pendente'
@@ -402,9 +428,15 @@ export default function Reservas() {
         </div>
 
         {/* FORMULÁRIO RESPONSIVO COM DROPDOWNS CUSTOMIZADOS */}
-        <div className="bg-white p-6 sm:p-8 md:p-12 shadow-sm border border-stone-200">
+        <div className="bg-white p-6 sm:p-8 md:p-12 shadow-sm border border-stone-200 relative">
+          
+          {/* HONEYPOT FIELD NO FORMULÁRIO GERAL (Impede submissão pelo enter se focado) */}
           <form className="space-y-6 sm:space-y-8">
-            
+            <div className="absolute opacity-0 -z-50 h-0 w-0 overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 sm:pb-8 border-b border-stone-100">
               <div>
                 <label className="block text-xs uppercase tracking-widest font-medium text-[#084063] mb-2">Check-in *</label>
@@ -512,7 +544,7 @@ export default function Reservas() {
 
             <div className="flex items-start gap-3">
               <input type="checkbox" id="rgpd" name="rgpd" required className="mt-1 h-4 w-4 border-stone-300 text-[#084063] focus:ring-[#084063]" />
-              <label htmlFor="rgpd" className="text-xs sm:text-sm font-light text-stone-500 leading-relaxed">
+              <label htmlFor="rgpd" className="text-xs sm:text-sm font-light text-stone-500 leading-relaxed mt-0.5">
                 Li e aceito os <Link href="/termos" className="underline hover:text-[#084063] transition-colors">Termos e Condições</Link> e a <Link href="/privacidade" className="underline hover:text-[#084063] transition-colors">Política de Privacidade</Link>, e autorizo o tratamento dos meus dados para efeitos de gestão da reserva.
               </label>
             </div>
