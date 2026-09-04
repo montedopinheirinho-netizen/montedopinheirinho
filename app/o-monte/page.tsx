@@ -84,8 +84,8 @@ export default function OMonte() {
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-[1px] bg-white/30 mb-6"></div>
-              <h3 className="text-lg uppercase tracking-widest mb-3 font-medium">Conectividade Starlink</h3>
-              <p className="text-white/70 font-light text-sm leading-relaxed">Acesso Wi-Fi de alta velocidade em toda a propriedade, permitindo total conforto para trabalho remoto ou partilha de momentos.</p>
+              <h3 className="text-lg uppercase tracking-widest mb-3 font-medium">Conectividade</h3>
+              <p className="text-white/70 font-light text-sm leading-relaxed">Acesso Wi-Fi em toda a propriedade, permitindo total conforto para trabalho remoto ou partilha de momentos.</p>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-[1px] bg-white/30 mb-6"></div>
